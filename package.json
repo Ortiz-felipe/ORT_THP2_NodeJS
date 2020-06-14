@@ -5,7 +5,8 @@
   "description": "Proyecto final THP2 con NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "node test/moduloFeriadosTest.js"
+    "test": "node test/moduloFeriadosTest.js",
+    "start": " node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,10 @@
   },
   "homepage": "https://github.com/Ortiz-felipe/ORT_THP2_NodeJS#readme",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "axios": "^0.19.2",
+    "email-validator": "^2.0.4",
+    "express": "^4.17.1",
     "moment": "^2.26.0"
   }
 }
