@@ -1,10 +1,11 @@
 {
+  "type": "module",
   "name": "pfinal_thp2",
   "version": "1.0.0",
   "description": "Proyecto final THP2 con NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/moduloFeriadosTest.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Ortiz-felipe/ORT_THP2_NodeJS/issues"
   },
-  "homepage": "https://github.com/Ortiz-felipe/ORT_THP2_NodeJS#readme"
+  "homepage": "https://github.com/Ortiz-felipe/ORT_THP2_NodeJS#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "moment": "^2.26.0"
+  }
 }
