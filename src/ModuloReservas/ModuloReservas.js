@@ -3,6 +3,7 @@ import moment from 'moment'
 
 
 const reservas = []
+let id = 1
 class ModuloReservas {
 
     constructor(moduloFeriados) {
@@ -11,7 +12,9 @@ class ModuloReservas {
 
     async crear(reservaParam) {
         await this.validar(reservaParam)
+        reservaParam.id = id
         reservas.push(reservaParam)
+        id++
         return reservaParam
 
     }
