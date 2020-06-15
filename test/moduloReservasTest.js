@@ -45,9 +45,25 @@ async function moduloReservasTest() {
             console.log(error)
         }
     }
+
+    async function crear_conFechaAnterior_noCreaReserva() {
+        const reserva = {
+            nombre: "pepe",
+            dni: "95821465",
+            fecha: "2020-03-24",
+            email: "nancy@gmail.com"
+        }
+        try {
+            const crearReserva = await moduloReservas.crear(reserva)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     await crear_conDiaFeriado_noCreaReserva()
     await crear_conDiaNoferiado_creaReserva()
     await crear_conNombreInvalido_noCreaReserva()
+    await crear_conFechaAnterior_noCreaReserva()
 }
 
 
