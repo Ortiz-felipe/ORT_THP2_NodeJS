@@ -1,5 +1,5 @@
 import Joi from '@hapi/joi'
-import ModuloFeriadosFactory from '../ModuloFeriados/ModuloFeriadoFactory.js'
+import moment from 'moment'
 
 
 const reservas = []
@@ -33,11 +33,16 @@ class ModuloReservas {
 
         })
         await schema.validateAsync(reservaParam);
+        if (moment(reservaParam.fecha).isBefore(moment())) {
+            throw {
+                error: 'La fecha es anterior al dia de hoy'
+            }
+        }
         const esFeriado = this.moduloFeriados.esFeriado(reservaParam.fecha)
 
         if (esFeriado) {
             throw {
-                error: 'el dia es un feriado'
+                error: 'El dia es un feriado'
             }
         }
 
