@@ -1,11 +1,18 @@
 import Joi from '@hapi/joi'
+import ModuloFeriadosFactory from '../ModuloFeriados/ModuloFeriadoFactory.js'
+
 
 const reservas = []
 class ModuloReservas {
 
+    constructor(moduloFeriados) {
+        this.moduloFeriados = moduloFeriados
+    }
+
     async crear(reservaParam) {
         await this.validar(reservaParam)
         reservas.push(reservaParam)
+        return reservaParam
 
     }
 
@@ -26,6 +33,15 @@ class ModuloReservas {
 
         })
         await schema.validateAsync(reservaParam);
+        const esFeriado = this.moduloFeriados.esFeriado(reservaParam.fecha)
+        console.log(esFeriado)
+
+        if (esFeriado) {
+            throw {
+                error: 'el dia es un feriado'
+            }
+        }
+
 
     }
 
