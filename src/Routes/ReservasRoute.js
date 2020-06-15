@@ -1,5 +1,4 @@
 import express from 'express'
-import ModuloReservas from '../ModuloReservas/ModuloReservas.js'
 import ModuloReservasFactory from '../ModuloReservas/ModuloReservasFactory.js'
 
 

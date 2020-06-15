@@ -5,7 +5,7 @@
   "description": "Proyecto final THP2 con NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "node test/moduloFeriadosTest.js",
+    "test": "node test/index.js",
     "start": " nodemon src/server.js"
   },
   "repository": {

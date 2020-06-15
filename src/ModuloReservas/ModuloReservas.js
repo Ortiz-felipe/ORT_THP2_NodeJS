@@ -34,7 +34,6 @@ class ModuloReservas {
         })
         await schema.validateAsync(reservaParam);
         const esFeriado = this.moduloFeriados.esFeriado(reservaParam.fecha)
-        console.log(esFeriado)
 
         if (esFeriado) {
             throw {
