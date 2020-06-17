@@ -13,6 +13,7 @@ class ModuloReservas {
     async crear(reservaParam) {
         await this.validar(reservaParam)
         reservaParam.id = id
+        reservaParam.estaConfirmada = false
         reservas.push(reservaParam)
         id++
         return reservaParam
@@ -48,8 +49,24 @@ class ModuloReservas {
                 error: 'El dia es un feriado'
             }
         }
+    }
 
+    confirmar(reservaId) {
+        const reservaEncontrada = this.obtenerPorId(reservaId)
+        if (reservaEncontrada) {
+            reservaEncontrada.estaConfirmada = true
+            return reservaEncontrada
+        } else {
+            throw {
+                error: 'Id no encontrado',
+                status: 404
+            }
+        }
+    }
 
+    obtenerPorId(reservaId) {
+        const reservaEncontrada = reservas.find((reserva) => reservaId === reserva.id)
+        return reservaEncontrada
     }
 
     obtenerTodas() {
