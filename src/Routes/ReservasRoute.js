@@ -23,4 +23,17 @@ reservasRoute.get('/', (req, res) => {
     res.json(reservas).send()
 })
 
+reservasRoute.post('/:id/confirmacion', (req, res) => {
+    try {
+        const reserva = moduloReserva.confirmar(Number(req.params.id))
+        res.json(reserva).send()
+    } catch (error) {
+        if (error.status) {
+            res.status(error.status).json(error).send()
+        } else {
+            res.status(500).send()
+        }
+    }
+})
+
 export default reservasRoute
