@@ -38,5 +38,5 @@ async function moduloFeriadosTest() {
     esFeriado_conFechaInvalida_lanzaError()
 }
 
-moduloFeriadosTest()
+export default moduloFeriadosTest
 

@@ -5,8 +5,8 @@
   "description": "Proyecto final THP2 con NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "node test/moduloFeriadosTest.js",
-    "start": " node src/server.js"
+    "test": "node test/index.js",
+    "start": " nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,8 @@
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "moment": "^2.26.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
