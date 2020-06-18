@@ -1,14 +1,24 @@
 import ModuloReservasFactory from '../src/ModuloReservas/ModuloReservasFactory.js'
+import ModuloCanchasFactory from '../src/ModuloCanchas/ModuloCanchasFactory.js'
 
 async function moduloReservasTest() {
     const moduloReservas = await ModuloReservasFactory.create();
+    const moduloCanchas = ModuloCanchasFactory.create();
+
+    const cancha = {
+        nombre: 'Pele',
+        precio: 50,
+        capacidad: 11
+    }
+    const canchaCreada = await moduloCanchas.crear(cancha)
 
     async function crear_conDiaFeriado_noCreaReserva() {
         const reserva = {
             nombre: "nancy",
             dni: "95821465",
             fecha: "2020-12-25",
-            email: "nancy@gmail.com"
+            email: "nancy@gmail.com",
+            canchaId: canchaCreada.id
         }
         try {
             const crearReserva = await moduloReservas.crear(reserva)
@@ -22,7 +32,8 @@ async function moduloReservasTest() {
             nombre: "nancy",
             dni: "95821465",
             fecha: "2020-12-23",
-            email: "nancy@gmail.com"
+            email: "nancy@gmail.com",
+            canchaId: canchaCreada.id
         }
         try {
             const crearReserva = await moduloReservas.crear(reserva)
@@ -37,7 +48,9 @@ async function moduloReservasTest() {
             nombre: 1456,
             dni: "95821465",
             fecha: "2020-12-24",
-            email: "nancy@gmail.com"
+            email: "nancy@gmail.com",
+            canchaId: canchaCreada.id
+
         }
         try {
             const crearReserva = await moduloReservas.crear(reserva)
@@ -51,7 +64,8 @@ async function moduloReservasTest() {
             nombre: "pepe",
             dni: "95821465",
             fecha: "2020-03-24",
-            email: "nancy@gmail.com"
+            email: "nancy@gmail.com",
+            canchaId: canchaCreada.id
         }
         try {
             await moduloReservas.crear(reserva)
@@ -65,7 +79,8 @@ async function moduloReservasTest() {
             nombre: "pepe",
             dni: "95821465",
             fecha: "2020-07-24",
-            email: "nancy@gmail.com"
+            email: "nancy@gmail.com",
+            canchaId: canchaCreada.id
         }
         const reservaCreada = await moduloReservas.crear(reserva)
         moduloReservas.confirmar(reservaCreada.id)
@@ -86,7 +101,8 @@ async function moduloReservasTest() {
             nombre: "pepe",
             dni: "95821465",
             fecha: "2020-07-24",
-            email: "nancy@gmail.com"
+            email: "nancy@gmail.com",
+            canchaId: canchaCreada.id
         }
         const reservaCreada = await moduloReservas.crear(reserva)
         moduloReservas.eliminarReserva(reservaCreada.id)
