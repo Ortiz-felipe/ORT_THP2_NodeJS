@@ -2,6 +2,7 @@ import express from 'express'
 import ModuloReservasFactory from '../ModuloReservas/ModuloReservasFactory.js'
 
 
+
 let moduloReserva
 ModuloReservasFactory.create().then((moduloReservaCreado) => {
     moduloReserva = moduloReservaCreado
@@ -33,6 +34,26 @@ reservasRoute.post('/:id/confirmacion', (req, res) => {
         } else {
             res.status(500).send()
         }
+    }
+})
+
+reservasRoute.get('/:id', (req, res) => {
+    try {
+        const reserva = moduloReserva.obtenerPorId(req.params.id)
+        res.json(reserva).send()
+    } catch (error) {
+        res.json(error).send()
+    }
+
+})
+
+reservasRoute.delete('/:id', (req, res) => {
+    try {
+        const reserva = moduloReserva.obtenerPorId(req.params.id)
+        moduloReserva.eliminarReserva(reserva)
+        res.status(204).send()
+    } catch (errror) {
+        res.status(404)
     }
 })
 

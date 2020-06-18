@@ -2,6 +2,7 @@ import Joi from '@hapi/joi'
 import moment from 'moment'
 
 
+
 const reservas = []
 let id = 1
 class ModuloReservas {
@@ -53,8 +54,12 @@ class ModuloReservas {
 
     confirmar(reservaId) {
         const reservaEncontrada = this.obtenerPorId(reservaId)
+        reservaEncontrada.estaConfirmada = true
+    }
+
+    obtenerPorId(reservaId) {
+        const reservaEncontrada = reservas.find((reserva) => reservaId === reserva.id)
         if (reservaEncontrada) {
-            reservaEncontrada.estaConfirmada = true
             return reservaEncontrada
         } else {
             throw {
@@ -62,11 +67,12 @@ class ModuloReservas {
                 status: 404
             }
         }
+
     }
 
-    obtenerPorId(reservaId) {
-        const reservaEncontrada = reservas.find((reserva) => reservaId === reserva.id)
-        return reservaEncontrada
+    eliminarReserva(reservaId) {
+        const index = reservas.findIndex((reserva) => reservaId === reserva.id)
+        reservas.splice(index, 1)
     }
 
     obtenerTodas() {
