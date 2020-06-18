@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/index.js",
-    "start": " nodemon src/server.js"
+    "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,9 @@
   "homepage": "https://github.com/Ortiz-felipe/ORT_THP2_NodeJS#readme",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "@sendgrid/mail": "^7.1.1",
     "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "moment": "^2.26.0"
