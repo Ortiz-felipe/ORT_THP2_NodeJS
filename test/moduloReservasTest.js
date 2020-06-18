@@ -54,16 +54,63 @@ async function moduloReservasTest() {
             email: "nancy@gmail.com"
         }
         try {
-            const crearReserva = await moduloReservas.crear(reserva)
+            await moduloReservas.crear(reserva)
         } catch (error) {
             console.log(error)
         }
+    }
+
+    async function confirmarReserva_reservaExistente() {
+        const reserva = {
+            nombre: "pepe",
+            dni: "95821465",
+            fecha: "2020-07-24",
+            email: "nancy@gmail.com"
+        }
+        const reservaCreada = await moduloReservas.crear(reserva)
+        moduloReservas.confirmar(reservaCreada.id)
+        console.log('reservaConfirmada')
+    }
+
+    async function confirmarReserva_reservaNoExistente() {
+        try {
+            moduloReservas.confirmar(100)
+        } catch (error) {
+            console.log('No se confirmo por ' + JSON.stringify(error))
+        }
+
+    }
+
+    async function eliminarReserva_reservaExistente() {
+        const reserva = {
+            nombre: "pepe",
+            dni: "95821465",
+            fecha: "2020-07-24",
+            email: "nancy@gmail.com"
+        }
+        const reservaCreada = await moduloReservas.crear(reserva)
+        moduloReservas.eliminarReserva(reservaCreada.id)
+        console.log('Reserva eliminada')
+
+    }
+
+    async function eliminarReserva_reservaNoExistente() {
+        try {
+            moduloReservas.eliminarReserva(100)
+        } catch (error) {
+            console.log('No se elimino por ' + JSON.stringify(error))
+        }
+
     }
 
     await crear_conDiaFeriado_noCreaReserva()
     await crear_conDiaNoferiado_creaReserva()
     await crear_conNombreInvalido_noCreaReserva()
     await crear_conFechaAnterior_noCreaReserva()
+    await confirmarReserva_reservaExistente()
+    await confirmarReserva_reservaNoExistente()
+    await eliminarReserva_reservaExistente()
+    await eliminarReserva_reservaNoExistente()
 }
 
 
