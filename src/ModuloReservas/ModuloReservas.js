@@ -7,14 +7,16 @@ const reservas = []
 let id = 1
 class ModuloReservas {
 
-    constructor(moduloFeriados) {
+    constructor(moduloFeriados, moduloCanchas) {
         this.moduloFeriados = moduloFeriados
+        this.moduloCanchas = moduloCanchas
     }
 
     async crear(reservaParam) {
         await this.validar(reservaParam)
         reservaParam.id = id
         reservaParam.estaConfirmada = false
+        this.moduloCanchas.obtenerPorId(reservaParam.canchaId)
         reservas.push(reservaParam)
         id++
         return reservaParam
@@ -34,7 +36,9 @@ class ModuloReservas {
             dni: Joi.string()
                 .required()
                 .min(7)
-                .max(8)
+                .max(8),
+            canchaId: Joi.number()
+                .required()
 
         })
         await schema.validateAsync(reservaParam);

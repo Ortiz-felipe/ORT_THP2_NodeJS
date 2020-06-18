@@ -15,7 +15,12 @@ reservasRoute.post('/', async (req, res) => {
         const reservaCreada = await moduloReserva.crear(body)
         res.status(201).json(reservaCreada).send()
     } catch (error) {
-        res.status(400).json(error).send()
+        console.log(error)
+        if (error.status) {
+            res.status(error.status).json(error).send()
+        } else {
+            res.status(500).send()
+        }
     }
 })
 
@@ -43,6 +48,7 @@ reservasRoute.get('/:id', (req, res) => {
         res.json(reserva).send()
     } catch (error) {
         res.json(error).send()
+
     }
 
 })

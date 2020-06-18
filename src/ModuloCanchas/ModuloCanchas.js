@@ -40,7 +40,7 @@ class ModuloCanchas {
             return canchaEncontrada
         } else {
             throw {
-                error: 'Id no encontrado',
+                error: 'Id de cancha no encontrado',
                 status: 404
             }
         }
