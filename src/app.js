@@ -9,4 +9,5 @@ app.use(express.json())
 app.use('/reservas', reservasRoute)
 app.use('/canchas', canchasRoute)
 
+
 export default app
