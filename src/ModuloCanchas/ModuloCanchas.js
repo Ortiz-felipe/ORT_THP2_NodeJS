@@ -29,5 +29,32 @@ class ModuloCanchas {
         await schema.validateAsync(canchaParam);
 
     }
+
+    obtenerTodas() {
+        return canchas
+    }
+
+    obtenerPorId(canchaId) {
+        const canchaEncontrada = canchas.find((cancha) => canchaId === cancha.id)
+        if (canchaEncontrada) {
+            return canchaEncontrada
+        } else {
+            throw {
+                error: 'Id no encontrado',
+                status: 404
+            }
+        }
+    }
+
+    eliminarCancha(canchaId) {
+        const index = canchas.findIndex((cancha) => canchaId === cancha.id)
+        if (index === -1) {
+            throw {
+                error: 'id no encontrado',
+                status: 404
+            }
+        }
+        canchas.splice(index, 1)
+    }
 }
 export default ModuloCanchas
