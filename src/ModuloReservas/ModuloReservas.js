@@ -72,6 +72,12 @@ class ModuloReservas {
 
     eliminarReserva(reservaId) {
         const index = reservas.findIndex((reserva) => reservaId === reserva.id)
+        if (index === -1) {
+            throw {
+                error: 'id no encontrado',
+                status: 404
+            }
+        }
         reservas.splice(index, 1)
     }
 
