@@ -1,30 +1,26 @@
-const sgMail = require('@sendgrid/mail');
+import * as SendGrid from '@sendgrid/mail';
 
-module.exports = class EmailService {
+class EmailService {
     constructor(api_key) {
         this.api_key = api_key;
         this.configure();
     }
 
     configure() {
-        sgMail.setApiKey(this.api_key);
+        SendGrid.default.setApiKey(this.api_key);
     }
 
-    async sendMail(emailFrom, emailTo, subject, textBody) {
-        const email = {
-            to: emailTo,
-            from: emailFrom,
-            subject: subject,
-            text: textBody
-        };
-
+    async sendMail(email) {
         try {
-            await sgMail.send(email)
+            await SendGrid.default.send(email)
         } catch (error) {
-            throw new Error(error.response.body);
+            let {message} = error.response.body[0];
+            throw new Error(message);
         }
     }
 };
+
+export default EmailService;
 
 // class EmailService {
 //     constructor(api_key) {
@@ -51,5 +47,3 @@ module.exports = class EmailService {
 //         }
 //     }
 // }
-
-// export default EmailService;
