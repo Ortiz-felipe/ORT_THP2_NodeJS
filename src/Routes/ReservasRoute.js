@@ -1,16 +1,23 @@
 import express from 'express';
 import ModuloReservasFactory from '../ModuloReservas/ModuloReservasFactory.js';
+import Reserva from '../models/Reserva.js';
 
 let moduloReserva;
+
 ModuloReservasFactory.create().then((moduloReservaCreado) => {
   moduloReserva = moduloReservaCreado;
 });
+
+const transformarBodyAReserva = (body) => new Reserva(
+  body.nombre, body.email, body.fecha, body.dni, body.canchaId,
+);
+
 const reservasRoute = express.Router();
 
 reservasRoute.post('/', async (req, res) => {
   const { body } = req;
   try {
-    const reservaCreada = await moduloReserva.crear(body);
+    const reservaCreada = await moduloReserva.crear(transformarBodyAReserva(body));
     res.status(201).json(reservaCreada).send();
   } catch (error) {
     console.log(error);

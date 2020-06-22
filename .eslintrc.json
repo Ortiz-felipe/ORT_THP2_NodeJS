@@ -17,6 +17,7 @@
         "no-plusplus": "off",
         "no-param-reassign": "off",
         "import/extensions": "off",
-        "camelcase": "off"
+        "camelcase": "off",
+        "no-console": "off"
     }
 }

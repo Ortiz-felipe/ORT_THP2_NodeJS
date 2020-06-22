@@ -1,12 +1,15 @@
 import express from 'express';
 import ModuloCanchasFactory from '../ModuloCanchas/ModuloCanchasFactory.js';
+import Cancha from '../models/Cancha.js';
 
 const moduloCanchas = ModuloCanchasFactory.create();
 const canchasRoute = express.Router();
 
+const transformarBodyACancha = (body) => new Cancha(body.nombre, body.precio, body.capacidad);
+
 canchasRoute.post('/', async (req, res) => {
   const { body } = req;
-  const canchaCreada = await moduloCanchas.crear(body);
+  const canchaCreada = await moduloCanchas.crear(transformarBodyACancha(body));
   res.status(201).json(canchaCreada).send();
 });
 

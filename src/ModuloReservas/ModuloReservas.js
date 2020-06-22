@@ -9,17 +9,17 @@ class ModuloReservas {
     this.moduloCanchas = moduloCanchas;
   }
 
-  async crear(reservaParam) {
-    await this.validar(reservaParam);
-    reservaParam.id = id;
-    reservaParam.estaConfirmada = false;
-    this.moduloCanchas.obtenerPorId(reservaParam.canchaId);
-    reservas.push(reservaParam);
+  async crear(reserva) {
+    await this.validar(reserva);
+    reserva.id = id;
+    reserva.estaConfirmada = false;
+    this.moduloCanchas.obtenerPorId(reserva.canchaId);
+    reservas.push(reserva);
     id++;
-    return reservaParam;
+    return reserva;
   }
 
-  async validar(reservaParam) {
+  async validar(reserva) {
     const schema = Joi.object({
       nombre: Joi.string()
         .required(),
@@ -37,13 +37,13 @@ class ModuloReservas {
         .required(),
 
     });
-    await schema.validateAsync(reservaParam);
-    if (moment(reservaParam.fecha).isBefore(moment())) {
+    await schema.validateAsync(reserva);
+    if (moment(reserva.fecha).isBefore(moment())) {
       throw {
         error: 'La fecha es anterior al dia de hoy',
       };
     }
-    const esFeriado = this.moduloFeriados.esFeriado(reservaParam.fecha);
+    const esFeriado = this.moduloFeriados.esFeriado(reserva.fecha);
 
     if (esFeriado) {
       throw {

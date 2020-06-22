@@ -4,16 +4,16 @@ const canchas = [];
 let id = 1;
 
 class ModuloCanchas {
-  async crear(canchaParam) {
-    await this.validar(canchaParam);
-    canchaParam.id = id;
-    canchaParam.estaHabilitada = true;
-    canchas.push(canchaParam);
+  async crear(cancha) {
+    await this.validar(cancha);
+    cancha.id = id;
+    cancha.estaHabilitada = true;
+    canchas.push(cancha);
     id++;
-    return canchaParam;
+    return cancha;
   }
 
-  async validar(canchaParam) {
+  async validar(cancha) {
     const schema = Joi.object({
       nombre: Joi.string()
         .required(),
@@ -25,7 +25,7 @@ class ModuloCanchas {
         .min(1)
         .max(20),
     });
-    await schema.validateAsync(canchaParam);
+    await schema.validateAsync(cancha);
   }
 
   obtenerTodas() {
