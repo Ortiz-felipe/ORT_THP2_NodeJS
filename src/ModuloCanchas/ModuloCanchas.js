@@ -1,15 +1,14 @@
 import Joi from '@hapi/joi';
 
-const canchas = [];
-let id = 1;
-
 class ModuloCanchas {
+  constructor(canchaRepository) {
+    this.canchaRepository = canchaRepository;
+  }
+
   async crear(cancha) {
     await this.validar(cancha);
-    cancha.id = id;
     cancha.estaHabilitada = true;
-    canchas.push(cancha);
-    id++;
+    this.canchaRepository.guardar(cancha);
     return cancha;
   }
 
@@ -36,11 +35,11 @@ class ModuloCanchas {
   }
 
   obtenerTodas() {
-    return canchas;
+    return this.canchaRepository.obtenerTodas();
   }
 
   obtenerPorId(canchaId) {
-    const canchaEncontrada = canchas.find((cancha) => canchaId === cancha.id);
+    const canchaEncontrada = this.canchaRepository.obtenerPorId(canchaId);
     if (canchaEncontrada) {
       return canchaEncontrada;
     }
@@ -51,14 +50,7 @@ class ModuloCanchas {
   }
 
   eliminarCancha(canchaId) {
-    const index = canchas.findIndex((cancha) => canchaId === cancha.id);
-    if (index === -1) {
-      throw {
-        error: 'id no encontrado',
-        status: 404,
-      };
-    }
-    canchas.splice(index, 1);
+    this.canchaRepository.eliminarCancha(canchaId);
   }
 }
 export default ModuloCanchas;
