@@ -1,24 +1,17 @@
 import ModuloCanchasFactory from '../src/ModuloCanchas/ModuloCanchasFactory.js';
+import Cancha from '../src/models/Cancha.js';
 
 async function moduloCanchasTest() {
   const moduloCanchas = ModuloCanchasFactory.create();
 
   async function crear_seCreaCancha() {
-    const cancha = {
-      nombre: 'Pele',
-      precio: 55,
-      capacidad: 11,
-    };
+    const cancha = new Cancha('Pele', 55, 11);
     const canchaCreada = await moduloCanchas.crear(cancha);
     console.log(canchaCreada);
   }
 
   async function crear_datosInvalidos_noSeCreaCancha() {
-    const cancha = {
-      nombre: 'Pele',
-      precio: 55,
-      capacidad: 0,
-    };
+    const cancha = new Cancha('Pele', 55, 0);
 
     try {
       await moduloCanchas.crear(cancha);
@@ -28,11 +21,7 @@ async function moduloCanchasTest() {
   }
 
   async function eliminarCancha_canchaExistente() {
-    const cancha = {
-      nombre: 'Pele',
-      precio: 55,
-      capacidad: 1,
-    };
+    const cancha = new Cancha('Pele', 55, 1);
     const canchaCreada = await moduloCanchas.crear(cancha);
     moduloCanchas.eliminarCancha(canchaCreada.id);
     console.log('Cancha eliminada');
