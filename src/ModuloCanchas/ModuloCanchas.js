@@ -25,7 +25,14 @@ class ModuloCanchas {
         .min(1)
         .max(20),
     });
-    await schema.validateAsync(cancha);
+    try {
+      await schema.validateAsync(cancha);
+    } catch (error) {
+      throw {
+        status: 400,
+        error,
+      };
+    }
   }
 
   obtenerTodas() {

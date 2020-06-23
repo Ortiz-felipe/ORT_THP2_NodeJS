@@ -7,10 +7,14 @@ const canchasRoute = express.Router();
 
 const transformarBodyACancha = (body) => new Cancha(body.nombre, body.precio, body.capacidad);
 
-canchasRoute.post('/', async (req, res) => {
+canchasRoute.post('/', async (req, res, next) => {
   const { body } = req;
-  const canchaCreada = await moduloCanchas.crear(transformarBodyACancha(body));
-  res.status(201).json(canchaCreada).send();
+  try {
+    const canchaCreada = await moduloCanchas.crear(transformarBodyACancha(body));
+    res.status(201).json(canchaCreada).send();
+  } catch (error) {
+    next(error);
+  }
 });
 
 canchasRoute.get('/', (req, res) => {
@@ -18,21 +22,21 @@ canchasRoute.get('/', (req, res) => {
   res.json(canchas).send();
 });
 
-canchasRoute.get('/:id', (req, res) => {
+canchasRoute.get('/:id', (req, res, next) => {
   try {
     const cancha = moduloCanchas.obtenerPorId(req.params.id);
     res.json(cancha).send();
   } catch (error) {
-    res.json(error).send();
+    next(error);
   }
 });
 
-canchasRoute.delete('/:id', (req, res) => {
+canchasRoute.delete('/:id', (req, res, next) => {
   try {
     moduloCanchas.eliminarCancha(req.params.id);
     res.status(204).send();
-  } catch (errror) {
-    res.status(404);
+  } catch (error) {
+    next(error);
   }
 });
 

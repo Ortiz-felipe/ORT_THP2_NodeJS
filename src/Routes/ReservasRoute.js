@@ -14,18 +14,13 @@ const transformarBodyAReserva = (body) => new Reserva(
 
 const reservasRoute = express.Router();
 
-reservasRoute.post('/', async (req, res) => {
+reservasRoute.post('/', async (req, res, next) => {
   const { body } = req;
   try {
     const reservaCreada = await moduloReserva.crear(transformarBodyAReserva(body));
     res.status(201).json(reservaCreada).send();
   } catch (error) {
-    console.log(error);
-    if (error.status) {
-      res.status(error.status).json(error).send();
-    } else {
-      res.status(500).send();
-    }
+    next(error);
   }
 });
 
@@ -34,35 +29,31 @@ reservasRoute.get('/', (req, res) => {
   res.json(reservas).send();
 });
 
-reservasRoute.post('/:id/confirmacion', (req, res) => {
+reservasRoute.post('/:id/confirmacion', (req, res, next) => {
   try {
     const reserva = moduloReserva.confirmar(Number(req.params.id));
     res.json(reserva).send();
   } catch (error) {
-    if (error.status) {
-      res.status(error.status).json(error).send();
-    } else {
-      res.status(500).send();
-    }
+    next(error);
   }
 });
 
-reservasRoute.get('/:id', (req, res) => {
+reservasRoute.get('/:id', (req, res, next) => {
   try {
     const reserva = moduloReserva.obtenerPorId(req.params.id);
     res.json(reserva).send();
   } catch (error) {
-    res.json(error).send();
+    next(error);
   }
 });
 
-reservasRoute.delete('/:id', (req, res) => {
+reservasRoute.delete('/:id', (req, res, next) => {
   try {
     const reserva = moduloReserva.obtenerPorId(req.params.id);
     moduloReserva.eliminarReserva(reserva);
     res.status(204).send();
-  } catch (errror) {
-    res.status(404);
+  } catch (error) {
+    next(error);
   }
 });
 

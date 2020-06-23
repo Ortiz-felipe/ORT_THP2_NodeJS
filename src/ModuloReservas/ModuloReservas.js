@@ -37,9 +37,17 @@ class ModuloReservas {
         .required(),
 
     });
-    await schema.validateAsync(reserva);
+    try {
+      await schema.validateAsync(reserva);
+    } catch (error) {
+      throw {
+        status: 400,
+        error,
+      };
+    }
     if (moment(reserva.fecha).isBefore(moment())) {
       throw {
+        status: 400,
         error: 'La fecha es anterior al dia de hoy',
       };
     }
@@ -47,6 +55,7 @@ class ModuloReservas {
 
     if (esFeriado) {
       throw {
+        status: 400,
         error: 'El dia es un feriado',
       };
     }
