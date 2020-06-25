@@ -1,23 +1,23 @@
 class ReservasRepository {
-    constructor(reservaDao) {
-        this.reservaDao = reservaDao;
-    }
-    
-    guardar(reserva) {
-        this.reservaDao.guardar(reserva);
-    } 
+  constructor(reservaDao) {
+    this.reservaDao = reservaDao;
+  }
 
-    obtenerTodas() {
-        return this.reservaDao.obtenerTodas();
-    }
+  guardar(reserva) {
+    this.reservaDao.guardar(reserva);
+  }
 
-    obtenerPorId(reservaId) {
-        return this.reservaDao.obtenerPorId(reservaId);
-    }
+  obtenerTodas() {
+    return this.reservaDao.obtenerTodas();
+  }
 
-    eliminarReserva(reservaId) {
-        this.reservaDao.eliminarReserva(reservaId);
-    }
+  obtenerPorId(reservaId) {
+    return this.reservaDao.obtenerPorId(reservaId);
+  }
+
+  eliminarReserva(reservaId) {
+    this.reservaDao.eliminarReserva(reservaId);
+  }
 }
 
 export default ReservasRepository;
