@@ -34,6 +34,7 @@ async function moduloCanchasTest() {
       console.log(error);
     }
   }
+  
   await crear_seCreaCancha();
   await crear_datosInvalidos_noSeCreaCancha();
   await eliminarCancha_canchaExistente();

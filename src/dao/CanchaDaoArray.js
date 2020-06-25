@@ -6,7 +6,8 @@ class CanchaDaoArray {
 
   guardar(cancha) {
     cancha.id = this.id;
-    this.canchas.push(cancha);
+    this.
+    canchas.push(cancha);
     this.id++;
   }
 
@@ -15,7 +16,8 @@ class CanchaDaoArray {
   }
 
   obtenerPorId(canchaId) {
-    return this.canchas.find((cancha) => canchaId === cancha.id);
+    let cancha = this.canchas.find(cancha => cancha.id === canchaId);
+    return cancha;
   }
 
   eliminarCancha(canchaId) {

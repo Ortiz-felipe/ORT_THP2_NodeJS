@@ -4,8 +4,8 @@ import Reserva from '../src/models/Reserva.js';
 import Cancha from '../src/models/Cancha.js';
 
 async function moduloReservasTest() {
-  const moduloReservas = await ModuloReservasFactory.create();
   const moduloCanchas = ModuloCanchasFactory.create();
+  const moduloReservas = await ModuloReservasFactory.create(moduloCanchas);
 
   const cancha = new Cancha('Pele', 55, 11);
   const canchaCreada = await moduloCanchas.crear(cancha);

@@ -5,6 +5,7 @@ class Reserva {
     this.fecha = fecha;
     this.dni = dni;
     this.canchaId = canchaId;
+    this.estadoReserva = false;
   }
 }
 

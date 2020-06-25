@@ -1,42 +1,25 @@
 import Joi from '@hapi/joi';
 import moment from 'moment';
-
-const reservas = [];
-let id = 1;
 class ModuloReservas {
-  constructor(moduloFeriados, moduloCanchas) {
+  constructor(moduloFeriados, moduloCanchas, reservasRepository) {
     this.moduloFeriados = moduloFeriados;
     this.moduloCanchas = moduloCanchas;
+    this.reservasRepository = reservasRepository;
   }
 
   async crear(reserva) {
     await this.validar(reserva);
-    reserva.id = id;
-    reserva.estaConfirmada = false;
+    // reserva.id = id;
+    // reserva.estaConfirmada = false;
     this.moduloCanchas.obtenerPorId(reserva.canchaId);
-    reservas.push(reserva);
-    id++;
+    this.reservasRepository.guardar(reserva);
+    // reservas.push(reserva);
+    // id++;
     return reserva;
   }
 
   async validar(reserva) {
-    const schema = Joi.object({
-      nombre: Joi.string()
-        .required(),
-
-      email: Joi.string()
-        .email()
-        .required(),
-      fecha: Joi.date()
-        .required(),
-      dni: Joi.string()
-        .required()
-        .min(7)
-        .max(8),
-      canchaId: Joi.number()
-        .required(),
-
-    });
+    const schema = this.JoiValidationObject();
     try {
       await schema.validateAsync(reserva);
     } catch (error) {
@@ -61,13 +44,40 @@ class ModuloReservas {
     }
   }
 
+  JoiValidationObject() {
+    return Joi.object({
+      nombre: Joi.string()
+        .required(),
+
+      email: Joi.string()
+        .email()
+        .required(),
+      fecha: Joi.date()
+        .required(),
+      dni: Joi.string()
+        .required()
+        .min(7)
+        .max(8),
+      canchaId: Joi.number()
+        .required(),
+      estadoReserva: Joi.bool()
+    });
+  }
+
   confirmar(reservaId) {
-    const reservaEncontrada = this.obtenerPorId(reservaId);
-    reservaEncontrada.estaConfirmada = true;
+    const reservaEncontrada = this.reservasRepository.obtenerPorId(reservaId);
+    if (reservaEncontrada) {
+      reservaEncontrada.estadoReserva = true;
+    } else {
+      throw {
+        error: 'Id no encontrado',
+        status: 404,
+      };
+    }
   }
 
   obtenerPorId(reservaId) {
-    const reservaEncontrada = reservas.find((reserva) => reservaId === reserva.id);
+    const reservaEncontrada = this.reservasRepository.obtenerPorId(reservaId);
     if (reservaEncontrada) {
       return reservaEncontrada;
     }
@@ -78,18 +88,11 @@ class ModuloReservas {
   }
 
   eliminarReserva(reservaId) {
-    const index = reservas.findIndex((reserva) => reservaId === reserva.id);
-    if (index === -1) {
-      throw {
-        error: 'id no encontrado',
-        status: 404,
-      };
-    }
-    reservas.splice(index, 1);
+    this.reservasRepository.eliminarReserva(reservaId);
   }
 
   obtenerTodas() {
-    return reservas;
+    return this.reservasRepository.obtenerTodas();
   }
 }
 
