@@ -1,5 +1,5 @@
 import MailingFactory from './MailingFactory.js';
-import MailingService from './MailingService.js';
+
 
 class MailingBuilder {
     mailingFactory;

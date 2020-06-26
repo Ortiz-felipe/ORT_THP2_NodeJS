@@ -1,60 +1,56 @@
-import Joi from '@hapi/joi'
-
-const canchas = []
-let id = 1
+import Joi from '@hapi/joi';
 
 class ModuloCanchas {
+  constructor(canchaRepository) {
+    this.canchaRepository = canchaRepository;
+  }
 
-    async crear(canchaParam) {
-        await this.validar(canchaParam)
-        canchaParam.id = id
-        canchaParam.estaHabilitada = true
-        canchas.push(canchaParam)
-        id++
-        return canchaParam
+  async crear(cancha) {
+    await this.validar(cancha);
+    cancha.estaHabilitada = true;
+    this.canchaRepository.guardar(cancha);
+    return cancha;
+  }
+
+  async validar(cancha) {
+    const schema = Joi.object({
+      nombre: Joi.string()
+        .required(),
+      precio: Joi.number()
+        .required()
+        .min(50),
+      capacidad: Joi.number()
+        .required()
+        .min(1)
+        .max(20),
+    });
+    try {
+      await schema.validateAsync(cancha);
+    } catch (error) {
+      throw {
+        status: 400,
+        error,
+      };
     }
+  }
 
-    async validar(canchaParam) {
-        const schema = Joi.object({
-            nombre: Joi.string()
-                .required(),
-            precio: Joi.number()
-                .required()
-                .min(50),
-            capacidad: Joi.number()
-                .required()
-                .min(1)
-                .max(20)
-        })
-        await schema.validateAsync(canchaParam);
+  obtenerTodas() {
+    return this.canchaRepository.obtenerTodas();
+  }
 
+  obtenerPorId(canchaId) {
+    const canchaEncontrada = this.canchaRepository.obtenerPorId(canchaId);
+    if (canchaEncontrada) {
+      return canchaEncontrada;
     }
+    throw {
+      error: 'Id de cancha no encontrado',
+      status: 404,
+    };
+  }
 
-    obtenerTodas() {
-        return canchas
-    }
-
-    obtenerPorId(canchaId) {
-        const canchaEncontrada = canchas.find((cancha) => canchaId === cancha.id)
-        if (canchaEncontrada) {
-            return canchaEncontrada
-        } else {
-            throw {
-                error: 'Id de cancha no encontrado',
-                status: 404
-            }
-        }
-    }
-
-    eliminarCancha(canchaId) {
-        const index = canchas.findIndex((cancha) => canchaId === cancha.id)
-        if (index === -1) {
-            throw {
-                error: 'id no encontrado',
-                status: 404
-            }
-        }
-        canchas.splice(index, 1)
-    }
+  eliminarCancha(canchaId) {
+    this.canchaRepository.eliminarCancha(canchaId);
+  }
 }
-export default ModuloCanchas
+export default ModuloCanchas;

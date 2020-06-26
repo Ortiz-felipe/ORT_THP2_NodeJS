@@ -1,10 +1,11 @@
-import ModuloCanchas from './ModuloCanchas.js'
+import ModuloCanchas from './ModuloCanchas.js';
+import CanchaRepositoryFactory from '../repository/CanchaRepositoryFactory.js';
 
 class ModuloCanchasFactory {
-
-    static create() {
-        return new ModuloCanchas()
-    }
+  static create() {
+    const canchaRepository = CanchaRepositoryFactory.create();
+    return new ModuloCanchas(canchaRepository);
+  }
 }
 
-export default ModuloCanchasFactory
+export default ModuloCanchasFactory;

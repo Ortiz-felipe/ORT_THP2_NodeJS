@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/index.js",
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,9 @@
     "moment": "^2.26.0"
   },
   "devDependencies": {
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.21.2",
     "nodemon": "^2.0.4"
   }
 }
