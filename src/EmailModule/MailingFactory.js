@@ -1,10 +1,14 @@
+import MailingService from './MailingService.js';
 class MailingFactory {
-    constructor(){
+    mailingService;
+
+    constructor() {
         this.configurations = process.env.SENDGRID_API_KEY;
+        this.mailingService = new MailingService(this.configurations);
     }
 
-    getConfigurations() {
-        return this.configurations;
+    getMailingService() {
+        return this.mailingService;
     }
 }
 
