@@ -4,7 +4,7 @@ import ReservasRepositoryFactory from '../repository/ReservasRepositoryFactory.j
 
 class ModuloReservasFactory {
   static async create(canchas) {
-    const moduloFeriado = await ModuloFeriadosFactory.create();    
+    const moduloFeriado = await ModuloFeriadosFactory.create();
     const repository = ReservasRepositoryFactory.create();
 
     return new ModuloReservas(moduloFeriado, canchas, repository);
