@@ -1,8 +1,8 @@
-import CanchaDaoArray from './CanchaDaoArray.js';
+import CanchaDaoDb from './CanchaDaoDb.js';
 
 class CanchaDaoFactory {
   static create() {
-    return new CanchaDaoArray();
+    return new CanchaDaoDb();
   }
 }
 

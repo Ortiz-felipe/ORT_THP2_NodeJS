@@ -31,8 +31,7 @@ class CU_crearCancha {
 
   async run(cancha) {
     await this.validar(cancha);
-    this.canchaRepository.guardar(cancha);
-    return cancha;
+    return this.canchaRepository.guardar(cancha);
   }
 }
 

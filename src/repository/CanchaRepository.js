@@ -4,7 +4,7 @@ class CanchaRepository {
   }
 
   guardar(cancha) {
-    this.canchaDao.guardar(cancha);
+    return this.canchaDao.guardar(cancha);
   }
 
   obtenerTodas() {
@@ -16,7 +16,7 @@ class CanchaRepository {
   }
 
   eliminarCancha(canchaId) {
-    this.canchaDao.eliminarCancha(canchaId);
+    return this.canchaDao.eliminarCancha(canchaId);
   }
 }
 

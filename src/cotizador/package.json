@@ -1,0 +1,18 @@
+{
+  "type": "module",
+  "name": "cotizacion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon ./test/testCotizacion.js",
+    "start": "nodemon ./src/server.js",
+    "prueba": "node testCotizacion.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "0.19.2"
+  }
+}
