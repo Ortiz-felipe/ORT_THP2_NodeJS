@@ -3,6 +3,7 @@ class Cancha {
     this.nombre = nombre;
     this.precio = precio;
     this.capacidad = capacidad;
+    this.estaHabilitada = true;
   }
 }
 

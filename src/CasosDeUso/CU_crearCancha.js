@@ -16,6 +16,8 @@ class CU_crearCancha {
         .required()
         .min(1)
         .max(20),
+      estaHabilitada: Joi.bool()
+        .required(),
     });
     try {
       await schema.validateAsync(cancha);
@@ -29,7 +31,6 @@ class CU_crearCancha {
 
   async run(cancha) {
     await this.validar(cancha);
-    cancha.estaHabilitada = true;
     this.canchaRepository.guardar(cancha);
     return cancha;
   }
