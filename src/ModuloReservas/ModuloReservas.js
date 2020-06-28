@@ -1,98 +1,36 @@
-import Joi from '@hapi/joi';
-import moment from 'moment';
+import CU_obtenerReservaPorId from '../CasosDeUso/CU_obtenerReservaPorId.js';
+import CU_eliminarReserva from '../CasosDeUso/CU_eliminarReserva.js';
+import CU_obtenerTodasLasReservas from '../CasosDeUso/CU_obtenerTodasLasReservas.js';
+import CU_confirmarReserva from '../CasosDeUso/CU_confirmarReserva.js';
+import CU_crearReserva from '../CasosDeUso/CU_crearReserva.js';
+
 class ModuloReservas {
   constructor(moduloFeriados, moduloCanchas, reservasRepository) {
-    this.moduloFeriados = moduloFeriados;
-    this.moduloCanchas = moduloCanchas;
-    this.reservasRepository = reservasRepository;
+    this.CU_obtenerReservaPorId = new CU_obtenerReservaPorId(reservasRepository);
+    this.CU_eliminarReserva = new CU_eliminarReserva(reservasRepository);
+    this.CU_obtenerTodasLasReservas = new CU_obtenerTodasLasReservas(reservasRepository);
+    this.CU_confirmarReserva = new CU_confirmarReserva(reservasRepository);
+    this.CU_crearReserva = new CU_crearReserva(moduloFeriados, moduloCanchas, reservasRepository);
   }
 
-  async crear(reserva) {
-    await this.validar(reserva);
-    // reserva.id = id;
-    // reserva.estaConfirmada = false;
-    this.moduloCanchas.obtenerPorId(reserva.canchaId);
-    this.reservasRepository.guardar(reserva);
-    // reservas.push(reserva);
-    // id++;
-    return reserva;
-  }
-
-  async validar(reserva) {
-    const schema = this.JoiValidationObject();
-    try {
-      await schema.validateAsync(reserva);
-    } catch (error) {
-      throw {
-        status: 400,
-        error,
-      };
-    }
-    if (moment(reserva.fecha).isBefore(moment())) {
-      throw {
-        status: 400,
-        error: 'La fecha es anterior al dia de hoy',
-      };
-    }
-    const esFeriado = this.moduloFeriados.esFeriado(reserva.fecha);
-
-    if (esFeriado) {
-      throw {
-        status: 400,
-        error: 'El dia es un feriado',
-      };
-    }
-  }
-
-  JoiValidationObject() {
-    return Joi.object({
-      nombre: Joi.string()
-        .required(),
-
-      email: Joi.string()
-        .email()
-        .required(),
-      fecha: Joi.date()
-        .required(),
-      dni: Joi.string()
-        .required()
-        .min(7)
-        .max(8),
-      canchaId: Joi.number()
-        .required(),
-      estadoReserva: Joi.bool()
-    });
+  crear(reserva) {
+    return this.CU_crearReserva.run(reserva);
   }
 
   confirmar(reservaId) {
-    const reservaEncontrada = this.reservasRepository.obtenerPorId(reservaId);
-    if (reservaEncontrada) {
-      reservaEncontrada.estadoReserva = true;
-    } else {
-      throw {
-        error: 'Id no encontrado',
-        status: 404,
-      };
-    }
+    this.CU_confirmarReserva.run(reservaId);
   }
 
   obtenerPorId(reservaId) {
-    const reservaEncontrada = this.reservasRepository.obtenerPorId(reservaId);
-    if (reservaEncontrada) {
-      return reservaEncontrada;
-    }
-    throw {
-      error: 'Id no encontrado',
-      status: 404,
-    };
+    return this.CU_obtenerReservaPorId.run(reservaId);
   }
 
   eliminarReserva(reservaId) {
-    this.reservasRepository.eliminarReserva(reservaId);
+    this.CU_eliminarReserva.run(reservaId);
   }
 
   obtenerTodas() {
-    return this.reservasRepository.obtenerTodas();
+    return this.CU_obtenerTodasLasReservas.run(0);
   }
 }
 
