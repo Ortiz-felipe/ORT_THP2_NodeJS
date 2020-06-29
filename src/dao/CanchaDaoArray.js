@@ -6,9 +6,9 @@ class CanchaDaoArray {
 
   guardar(cancha) {
     cancha.id = this.id;
-    this
-      .canchas.push(cancha);
+    this.canchas.push(cancha);
     this.id++;
+    return cancha;
   }
 
   obtenerTodas() {

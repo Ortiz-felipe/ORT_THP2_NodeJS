@@ -3,8 +3,11 @@ import CanchaRepositoryFactory from '../repository/CanchaRepositoryFactory.js';
 
 class ModuloCanchasFactory {
   static create() {
-    const canchaRepository = CanchaRepositoryFactory.create();
-    return new ModuloCanchas(canchaRepository);
+    if (!ModuloCanchasFactory.instance) {
+      const canchaRepository = CanchaRepositoryFactory.create();
+      ModuloCanchasFactory.instance = new ModuloCanchas(canchaRepository);
+    }
+    return ModuloCanchasFactory.instance;
   }
 }
 

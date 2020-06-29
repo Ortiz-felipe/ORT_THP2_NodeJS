@@ -17,7 +17,7 @@ export default class GeneradorReporte {
 
   async _generarColumnasCanchas() {
     const columnasCanchas = [];
-    const canchas = await this.repoCanchas.getAll();
+    const canchas = await this.repoCanchas.obtenerTodas();
     const cant = canchas.length;
     for (let i = 0; i < cant; i++) {
       columnasCanchas.push(this._getColumnaCancha(i + 1));
@@ -30,7 +30,7 @@ export default class GeneradorReporte {
   }
 
   async _llenarDatosColumnasCanchas(columnasCanchas) {
-    const reservasDelMes = await this.repoReservas.getReservasDelMes();
+    const reservasDelMes = await this.repoReservas.obtenerTodas();
     for (const r of reservasDelMes) {
       if (r.fecha.getDay() + 1 == 1) {
         columnasCanchas[r.nroCancha - 1][1]++;
@@ -57,7 +57,7 @@ export default class GeneradorReporte {
 
   async _obtenerGananciaPesos() {
     let gananciaPesos = 0;
-    const reservasDelMes = await this.repoReservas.getReservasDelMes();
+    const reservasDelMes = await this.repoReservas.obtenerTodas();
     for (const r of reservasDelMes) {
       gananciaPesos += r.precioFinal;
     }

@@ -30,7 +30,7 @@ class ModuloReservas {
   }
 
   obtenerTodas() {
-    return this.CU_obtenerTodasLasReservas.run(0);
+    return this.CU_obtenerTodasLasReservas.run();
   }
 }
 
