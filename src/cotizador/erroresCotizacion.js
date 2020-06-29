@@ -1,8 +1,8 @@
 class CotizacionError {
-    constructor(codError, mensaje) {
-        this.codError = codError
-        this.mensaje = mensaje
-    }
+  constructor(codError, mensaje) {
+    this.codError = codError;
+    this.mensaje = mensaje;
+  }
 }
 
-export default CotizacionError
+export default CotizacionError;
