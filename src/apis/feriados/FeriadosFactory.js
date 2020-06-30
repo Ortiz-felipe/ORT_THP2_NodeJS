@@ -1,13 +1,13 @@
 import axios from 'axios';
 import moment from 'moment';
-import ModuloFeriados from './ModuloFeriados.js';
+import Feriados from './Feriados.js';
 
-class ModuloFeriadosFactory {
+class FeriadosFactory {
   static async create() {
     const response = await axios.get(`http://nolaborables.com.ar/api/v2/feriados/${moment().year()}`);
     const feriados = response.data;
-    return new ModuloFeriados(feriados);
+    return new Feriados(feriados);
   }
 }
 
-export default ModuloFeriadosFactory;
+export default FeriadosFactory;

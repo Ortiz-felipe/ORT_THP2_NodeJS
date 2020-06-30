@@ -5,12 +5,12 @@ import CU_confirmarReserva from '../CasosDeUso/CU_confirmarReserva.js';
 import CU_crearReserva from '../CasosDeUso/CU_crearReserva.js';
 
 class ModuloReservas {
-  constructor(moduloFeriados, moduloCanchas, reservasRepository) {
+  constructor(apiFeriados, moduloCanchas, reservasRepository) {
     this.CU_obtenerReservaPorId = new CU_obtenerReservaPorId(reservasRepository);
     this.CU_eliminarReserva = new CU_eliminarReserva(reservasRepository);
     this.CU_obtenerTodasLasReservas = new CU_obtenerTodasLasReservas(reservasRepository);
     this.CU_confirmarReserva = new CU_confirmarReserva(reservasRepository);
-    this.CU_crearReserva = new CU_crearReserva(moduloFeriados, moduloCanchas, reservasRepository);
+    this.CU_crearReserva = new CU_crearReserva(apiFeriados, moduloCanchas, reservasRepository);
   }
 
   crear(reserva) {

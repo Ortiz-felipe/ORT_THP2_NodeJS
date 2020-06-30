@@ -2,8 +2,8 @@ import moment from 'moment';
 import Joi from '@hapi/joi';
 
 class CU_crearReserva {
-  constructor(moduloFeriados, moduloCanchas, reservasRepository) {
-    this.moduloFeriados = moduloFeriados;
+  constructor(apiFeriados, moduloCanchas, reservasRepository) {
+    this.apiFeriados = apiFeriados;
     this.moduloCanchas = moduloCanchas;
     this.reservasRepository = reservasRepository;
   }
@@ -24,7 +24,7 @@ class CU_crearReserva {
         error: 'La fecha es anterior al dia de hoy',
       };
     }
-    const esFeriado = this.moduloFeriados.esFeriado(reserva.fecha);
+    const esFeriado = this.apiFeriados.esFeriado(reserva.fecha);
 
     if (esFeriado) {
       throw {

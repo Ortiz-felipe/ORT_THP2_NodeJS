@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-class ModuloFeriados {
+class Feriados {
   constructor(feriados) {
     this.feriados = feriados;
   }
@@ -24,4 +24,4 @@ class ModuloFeriados {
   }
 }
 
-export default ModuloFeriados;
+export default Feriados;

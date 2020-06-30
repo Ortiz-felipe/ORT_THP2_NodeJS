@@ -1,21 +1,21 @@
-import ModuloFeriadosFactory from '../src/ModuloFeriados/ModuloFeriadoFactory.js';
+import FeriadosFactory from '../src/apis/feriados/FeriadosFactory.js';
 
-async function moduloFeriadosTest() {
-  const moduloFeriados = await ModuloFeriadosFactory.create();
+async function feriadosTest() {
+  const feriadosApi = await FeriadosFactory.create();
 
   function esFeriado_conDiaFeriado_devuelveTrue() {
-    const esFeriado = moduloFeriados.esFeriado('2020-12-25');
+    const esFeriado = feriadosApi.esFeriado('2020-12-25');
     console.log(`La fecha 2020-12-25 corresponde a un feriado: ${esFeriado}`);
   }
 
   function esFeriado_conDiaNoFeriado_devuelveFalse() {
-    const esFeriado = moduloFeriados.esFeriado('2020-12-21');
+    const esFeriado = feriadosApi.esFeriado('2020-12-21');
     console.log(`La fecha 2020-12-21 corresponde a un feriado: ${esFeriado}`);
   }
 
   function esFeriado_conFechaNula_lanzaError() {
     try {
-      moduloFeriados.esFeriado(null);
+      feriadosApi.esFeriado(null);
     } catch (error) {
       console.log(error);
       console.log('La fecha es nula');
@@ -24,7 +24,7 @@ async function moduloFeriadosTest() {
 
   function esFeriado_conFechaInvalida_lanzaError() {
     try {
-      moduloFeriados.esFeriado('holis');
+      feriadosApi.esFeriado('holis');
     } catch (error) {
       console.log(error);
       console.log('La fecha es invalida');
@@ -37,4 +37,4 @@ async function moduloFeriadosTest() {
   esFeriado_conFechaInvalida_lanzaError();
 }
 
-export default moduloFeriadosTest;
+export default feriadosTest;
