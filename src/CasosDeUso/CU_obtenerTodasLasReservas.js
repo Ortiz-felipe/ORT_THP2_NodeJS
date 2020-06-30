@@ -4,7 +4,7 @@ class CU_obtenerTodasLasReservas {
   }
 
   run() {
-    this.reservasRepository.obtenerTodas();
+    return this.reservasRepository.obtenerTodas();
   }
 }
 

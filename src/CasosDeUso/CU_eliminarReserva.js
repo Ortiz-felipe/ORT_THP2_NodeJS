@@ -4,7 +4,7 @@ class CU_eliminarReserva {
   }
 
   run(id) {
-    this.reservasRepository.eliminarReserva(id);
+    return this.reservasRepository.eliminarReserva(id);
   }
 }
 

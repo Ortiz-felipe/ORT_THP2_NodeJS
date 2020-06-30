@@ -3,8 +3,8 @@ class CU_obtenerReservaPorId {
     this.reservasRepository = reservasRepository;
   }
 
-  run(id) {
-    const reservaEncontrada = this.reservasRepository.obtenerPorId(id);
+  async run(id) {
+    const reservaEncontrada = await this.reservasRepository.obtenerPorId(id);
     if (reservaEncontrada) {
       return reservaEncontrada;
     }

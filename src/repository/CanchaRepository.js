@@ -1,22 +1,52 @@
+import CanchaDtoDb from '../dto/CanchaDtoDb.js';
+import Cancha from '../models/Cancha.js';
+
 class CanchaRepository {
   constructor(canchaDao) {
     this.canchaDao = canchaDao;
   }
 
-  guardar(cancha) {
-    this.canchaDao.guardar(cancha);
+  async guardar(cancha) {
+    const canchaDto = this.convertirADto(cancha);
+    const canchaDtoGuardada = await this.canchaDao.guardar(canchaDto);
+    return this.convertirACancha(canchaDtoGuardada);
   }
 
-  obtenerTodas() {
-    return this.canchaDao.obtenerTodas();
+  async obtenerTodas() {
+    const canchaDtos = await this.canchaDao.obtenerTodas();
+    return canchaDtos.map((canchaDto) => this.convertirACancha(canchaDto));
   }
 
-  obtenerPorId(canchaId) {
-    return this.canchaDao.obtenerPorId(canchaId);
+  async obtenerPorId(canchaId) {
+    const canchaDto = await this.canchaDao.obtenerPorId(canchaId);
+    return this.convertirACancha(canchaDto);
   }
 
   eliminarCancha(canchaId) {
-    this.canchaDao.eliminarCancha(canchaId);
+    return this.canchaDao.eliminarCancha(canchaId);
+  }
+
+  convertirADto(cancha) {
+    return CanchaDtoDb.build({
+      nombre: cancha.nombre,
+      precio: cancha.precio,
+      capacidad: cancha.capacidad,
+      estaHabilitada: cancha.estaHabilitada,
+
+    });
+  }
+
+  convertirACancha(canchaDto) {
+    if (!canchaDto) {
+      return null;
+    }
+    return new Cancha(
+      canchaDto.nombre,
+      canchaDto.precio,
+      canchaDto.capacidad,
+      canchaDto.estaHabilitada,
+      canchaDto.id,
+    );
   }
 }
 

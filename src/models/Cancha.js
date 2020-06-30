@@ -1,9 +1,10 @@
 class Cancha {
-  constructor(nombre, precio, capacidad) {
+  constructor(nombre, precio, capacidad, estaHabilitada = true, id = null) {
+    this.id = id;
     this.nombre = nombre;
     this.precio = precio;
     this.capacidad = capacidad;
-    this.estaHabilitada = true;
+    this.estaHabilitada = estaHabilitada;
   }
 }
 

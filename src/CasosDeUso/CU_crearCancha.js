@@ -7,6 +7,7 @@ class CU_crearCancha {
 
   async validar(cancha) {
     const schema = Joi.object({
+      id: Joi.number().allow(null),
       nombre: Joi.string()
         .required(),
       precio: Joi.number()
@@ -31,8 +32,7 @@ class CU_crearCancha {
 
   async run(cancha) {
     await this.validar(cancha);
-    this.canchaRepository.guardar(cancha);
-    return cancha;
+    return this.canchaRepository.guardar(cancha);
   }
 }
 

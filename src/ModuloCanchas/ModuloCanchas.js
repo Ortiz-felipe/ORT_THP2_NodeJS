@@ -24,7 +24,7 @@ class ModuloCanchas {
   }
 
   eliminarCancha(canchaId) {
-    this.CU_eliminarCancha.run(canchaId);
+    return this.CU_eliminarCancha.run(canchaId);
   }
 }
 export default ModuloCanchas;

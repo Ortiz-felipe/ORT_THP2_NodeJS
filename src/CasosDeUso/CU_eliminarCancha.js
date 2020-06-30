@@ -4,7 +4,7 @@ class CU_eliminarCancha {
   }
 
   run(id) {
-    this.canchaRepository.eliminarCancha(id);
+    return this.canchaRepository.eliminarCancha(id);
   }
 }
 

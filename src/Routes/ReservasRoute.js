@@ -24,33 +24,34 @@ reservasRoute.post('/', async (req, res, next) => {
   }
 });
 
-reservasRoute.get('/', (req, res) => {
-  const reservas = moduloReserva.obtenerTodas();
+reservasRoute.get('/', async (req, res) => {
+  const reservas = await moduloReserva.obtenerTodas();
   res.json(reservas).send();
 });
 
-reservasRoute.post('/:id/confirmacion', (req, res, next) => {
+reservasRoute.post('/:id/confirmacion', async (req, res, next) => {
   try {
-    const reserva = moduloReserva.confirmar(Number(req.params.id));
+    const reserva = await moduloReserva.confirmar(Number(req.params.id));
     res.json(reserva).send();
   } catch (error) {
     next(error);
   }
 });
 
-reservasRoute.get('/:id', (req, res, next) => {
+reservasRoute.get('/:id', async (req, res, next) => {
   try {
-    const reserva = moduloReserva.obtenerPorId(req.params.id);
+    const reserva = await moduloReserva.obtenerPorId(Number(req.params.id));
     res.json(reserva).send();
   } catch (error) {
     next(error);
   }
 });
 
-reservasRoute.delete('/:id', (req, res, next) => {
+reservasRoute.delete('/:id', async (req, res, next) => {
   try {
-    const reserva = moduloReserva.obtenerPorId(req.params.id);
-    moduloReserva.eliminarReserva(reserva);
+    const id = Number(req.params.id);
+    await moduloReserva.obtenerPorId(id);
+    await moduloReserva.eliminarReserva(id);
     res.status(204).send();
   } catch (error) {
     next(error);

@@ -1,8 +1,12 @@
 import CanchaDaoArray from './CanchaDaoArray.js';
+import CanchaDaoDb from './CanchaDaoDb.js';
 
 class CanchaDaoFactory {
   static create() {
-    return new CanchaDaoArray();
+    if (process.env.NODE_ENV === 'test') {
+      return new CanchaDaoArray();
+    }
+    return new CanchaDaoDb();
   }
 }
 

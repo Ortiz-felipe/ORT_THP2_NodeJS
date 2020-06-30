@@ -3,10 +3,11 @@ class CU_confirmarReserva {
     this.reservasRepository = reservasRepository;
   }
 
-  run(id) {
-    const reservaEncontrada = this.reservasRepository.obtenerPorId(id);
+  async run(id) {
+    const reservaEncontrada = await this.reservasRepository.obtenerPorId(id);
     if (reservaEncontrada) {
       reservaEncontrada.estadoReserva = true;
+      await this.reservasRepository.actualizar(id, reservaEncontrada);
     } else {
       throw {
         error: 'Id no encontrado',
