@@ -56,9 +56,8 @@ class CU_crearReserva {
 
   async run(reserva) {
     await this.validar(reserva);
-    this.moduloCanchas.obtenerPorId(reserva.canchaId);
-    this.reservasRepository.guardar(reserva);
-    return reserva;
+    await this.moduloCanchas.obtenerPorId(reserva.canchaId);
+    return this.reservasRepository.guardar(reserva);
   }
 }
 

@@ -3,8 +3,8 @@ class CU_obtenerCanchaPorId {
     this.canchaRepository = canchaRepository;
   }
 
-  run(id) {
-    const canchaEncontrada = this.canchaRepository.obtenerPorId(id);
+  async run(id) {
+    const canchaEncontrada = await this.canchaRepository.obtenerPorId(id);
     if (canchaEncontrada) {
       return canchaEncontrada;
     }

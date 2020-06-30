@@ -18,7 +18,7 @@ class ModuloReservas {
   }
 
   confirmar(reservaId) {
-    this.CU_confirmarReserva.run(reservaId);
+    return this.CU_confirmarReserva.run(reservaId);
   }
 
   obtenerPorId(reservaId) {
@@ -26,7 +26,7 @@ class ModuloReservas {
   }
 
   eliminarReserva(reservaId) {
-    this.CU_eliminarReserva.run(reservaId);
+    return this.CU_eliminarReserva.run(reservaId);
   }
 
   obtenerTodas() {

@@ -2,7 +2,7 @@ import CanchaDtoDb from '../dto/CanchaDtoDb.js';
 
 class CanchaDaoDb {
   guardar(cancha) {
-    return CanchaDtoDb.create(cancha);
+    return cancha.save();
   }
 
   obtenerTodas() {
