@@ -9,7 +9,7 @@
 - Rodrigo Barreda
 - Felipe Ortiz
 
-Para correr en local, hay que crear un archivo `.env` con el siguiente contenido:
+Para correr en local, hay que crear un archivo `.env` en la raíz del proyecto con el siguiente contenido:
 
 ```properties
 DB_NAME=#Nombre de la base de datos
