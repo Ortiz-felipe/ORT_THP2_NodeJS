@@ -1,4 +1,5 @@
 import moduloFeriadosTest from './moduloFeriadosTest.js';
+import './env.js';
 import moduloReservasTest from './moduloReservasTest.js';
 import moduloCanchasTest from './moduloCanchasTest.js';
 

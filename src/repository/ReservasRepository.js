@@ -54,6 +54,7 @@ class ReservasRepository {
       reservaDto.dni,
       reservaDto.CanchaId,
       reservaDto.estadoReserva,
+      reservaDto.id,
     );
   }
 }

@@ -5,7 +5,7 @@ import Cancha from '../src/models/Cancha.js';
 
 async function moduloReservasTest() {
   const moduloCanchas = ModuloCanchasFactory.create();
-  const moduloReservas = await ModuloReservasFactory.create(moduloCanchas);
+  const moduloReservas = await ModuloReservasFactory.create();
 
   const cancha = new Cancha('Pele', 55, 11);
   const canchaCreada = await moduloCanchas.crear(cancha);
@@ -23,10 +23,10 @@ async function moduloReservasTest() {
     const reserva = new Reserva('nancy', 'nancy@gmail.com', '2020-12-23', '95821465', canchaCreada.id);
     try {
       await moduloReservas.crear(reserva);
-      console.log(reserva);
     } catch (error) {
       console.log(error);
     }
+    console.log(reserva);
   }
 
   async function crear_conNombreInvalido_noCreaReserva() {
@@ -51,33 +51,37 @@ async function moduloReservasTest() {
 
   async function confirmarReserva_reservaExistente() {
     const reserva = new Reserva('pepe', 'nancy@gmail.com', '2021-07-24', '95821465', canchaCreada.id);
-    const reservaCreada = await moduloReservas.crear(reserva);
+    try {
+      const reservaCreada = await moduloReservas.crear(reserva);
 
-    moduloReservas.confirmar(reservaCreada.id);
+      await moduloReservas.confirmar(reservaCreada.id);
 
-    console.log('reservaConfirmada');
+      console.log('reservaConfirmada');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function confirmarReserva_reservaNoExistente() {
     try {
-      moduloReservas.confirmar(100);
+      await moduloReservas.confirmar(100);
     } catch (error) {
       console.log(`No se confirmo por ${JSON.stringify(error)}`);
     }
   }
 
   async function eliminarReserva_reservaExistente() {
-    const reserva = new Reserva('pepe', 'nancy@gmail.com', '2020-12-23', '95821465', canchaCreada.id);
+    const reserva = new Reserva('pepe', 'nancy@gmail.com', '2020-12-23', '95821465', 0);
     const reservaCreada = await moduloReservas.crear(reserva);
 
-    moduloReservas.eliminarReserva(reservaCreada.id);
+    await moduloReservas.eliminarReserva(reservaCreada.id);
 
     console.log('Reserva eliminada');
   }
 
   async function eliminarReserva_reservaNoExistente() {
     try {
-      moduloReservas.eliminarReserva(100);
+      await moduloReservas.eliminarReserva(100);
     } catch (error) {
       console.log(`No se elimino por ${JSON.stringify(error)}`);
     }

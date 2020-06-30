@@ -36,6 +36,7 @@ class CU_crearReserva {
 
   JoiValidationObject() {
     return Joi.object({
+      id: Joi.number().allow(null),
       nombre: Joi.string()
         .required(),
 

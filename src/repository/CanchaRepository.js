@@ -45,6 +45,7 @@ class CanchaRepository {
       canchaDto.precio,
       canchaDto.capacidad,
       canchaDto.estaHabilitada,
+      canchaDto.id,
     );
   }
 }

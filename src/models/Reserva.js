@@ -1,5 +1,6 @@
 class Reserva {
-  constructor(nombre, email, fecha, dni, canchaId, estadoReserva = false) {
+  constructor(nombre, email, fecha, dni, canchaId, estadoReserva = false, id = null) {
+    this.id = id;
     this.nombre = nombre;
     this.email = email;
     this.fecha = fecha;
