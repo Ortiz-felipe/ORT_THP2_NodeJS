@@ -6,7 +6,9 @@ async function moduloCanchasTest() {
 
   async function crear_seCreaCancha() {
     const cancha = new Cancha('Pele', 55, 11);
-    const canchaCreada = await moduloCanchas.crear(cancha);
+
+    const canchaCreada = await moduloCanchas.CU_crearCancha.run(cancha);
+
     console.log(canchaCreada);
   }
 
@@ -14,7 +16,7 @@ async function moduloCanchasTest() {
     const cancha = new Cancha('Pele', 55, 0);
 
     try {
-      await moduloCanchas.crear(cancha);
+      await moduloCanchas.CU_crearCancha.run(cancha);
     } catch (error) {
       console.log(`No se creo por ${JSON.stringify(error)}`);
     }
@@ -23,13 +25,15 @@ async function moduloCanchasTest() {
   async function eliminarCancha_canchaExistente() {
     const cancha = new Cancha('Pele', 55, 1);
     const canchaCreada = await moduloCanchas.crear(cancha);
-    moduloCanchas.eliminarCancha(canchaCreada.id);
+
+    moduloCanchas.CU_eliminarCancha.run(canchaCreada.id);
+
     console.log('Cancha eliminada');
   }
 
   async function eliminarCancha_canchaNoExistente() {
     try {
-      await moduloCanchas.eliminarCancha(100);
+      await moduloCanchas.CU_eliminarCancha.run(100);
     } catch (error) {
       console.log(error);
     }

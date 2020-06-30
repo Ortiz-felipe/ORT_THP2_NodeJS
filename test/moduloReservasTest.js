@@ -13,7 +13,7 @@ async function moduloReservasTest() {
   async function crear_conDiaFeriado_noCreaReserva() {
     const reserva = new Reserva('nancy', 'nancy@gmail.com', '2020-12-25', '95821465', canchaCreada.id);
     try {
-      await moduloReservas.crear(reserva);
+      await moduloReservas.CU_crearReserva.run(reserva);
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +22,7 @@ async function moduloReservasTest() {
   async function crear_conDiaNoferiado_creaReserva() {
     const reserva = new Reserva('nancy', 'nancy@gmail.com', '2020-12-23', '95821465', canchaCreada.id);
     try {
-      await moduloReservas.crear(reserva);
+      await moduloReservas.CU_crearReserva.run(reserva);
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +33,7 @@ async function moduloReservasTest() {
     const reserva = new Reserva(1456, 'nancy@gmail.com', '2020-12-23', '95821465', canchaCreada.id);
 
     try {
-      await moduloReservas.crear(reserva);
+      await moduloReservas.CU_crearReserva.run(reserva);
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +43,7 @@ async function moduloReservasTest() {
     const reserva = new Reserva('pepe', 'nancy@gmail.com', '2020-03-24', '95821465', canchaCreada.id);
 
     try {
-      await moduloReservas.crear(reserva);
+      await moduloReservas.CU_crearReserva.run(reserva);
     } catch (error) {
       console.log(error);
     }
@@ -54,7 +54,7 @@ async function moduloReservasTest() {
     try {
       const reservaCreada = await moduloReservas.crear(reserva);
 
-      await moduloReservas.confirmar(reservaCreada.id);
+      await moduloReservas.CU_confirmarReserva.run(reservaCreada.id);
 
       console.log('reservaConfirmada');
     } catch (error) {
@@ -64,7 +64,7 @@ async function moduloReservasTest() {
 
   async function confirmarReserva_reservaNoExistente() {
     try {
-      await moduloReservas.confirmar(100);
+      await moduloReservas.CU_confirmarReserva.run(100);
     } catch (error) {
       console.log(`No se confirmo por ${JSON.stringify(error)}`);
     }
@@ -74,14 +74,14 @@ async function moduloReservasTest() {
     const reserva = new Reserva('pepe', 'nancy@gmail.com', '2020-12-23', '95821465', 0);
     const reservaCreada = await moduloReservas.crear(reserva);
 
-    await moduloReservas.eliminarReserva(reservaCreada.id);
+    await moduloReservas.CU_eliminarReserva.run(reservaCreada.id);
 
     console.log('Reserva eliminada');
   }
 
   async function eliminarReserva_reservaNoExistente() {
     try {
-      await moduloReservas.eliminarReserva(100);
+      await moduloReservas.CU_eliminarReserva.run(100);
     } catch (error) {
       console.log(`No se elimino por ${JSON.stringify(error)}`);
     }
