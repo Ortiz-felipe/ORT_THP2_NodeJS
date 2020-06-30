@@ -1,0 +1,12 @@
+{
+    "name": "Trabajo Practico Final - THP 2",
+    "version": "0.1.0",
+    "description": "Documentacion de las APIs contenidas en el trabajo practico final de Taller de Programacion 2",
+    "title": "API Docs - Trabajo Practico Final - THP 2",
+    "url": "http://localhost:3000/",
+    "order": [
+        "Canchas",
+        "Reporte",
+        "Reservas"
+    ]
+}
