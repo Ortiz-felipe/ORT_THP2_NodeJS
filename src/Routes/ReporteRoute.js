@@ -1,12 +1,12 @@
 import express from 'express';
-import { getReportesApi } from '../apis/reportesAPI.js';
+import getReportesApi from '../apis/reportesAPI.js';
 
 function getReportesRouter() {
   const router = express.Router();
 
   const reportesAPI = getReportesApi();
 
-  router.get('/mensual', async (req, res) => {
+  router.get('/', async (req, res) => {
     try {
       const respuesta = await reportesAPI.generarReporteMensual();
       res.status(201).json({ res: respuesta });
