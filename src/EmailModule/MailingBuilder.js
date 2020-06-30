@@ -1,21 +1,17 @@
 import MailingFactory from './MailingFactory.js';
-
+import MailingService from './MailingService';
 
 class MailingBuilder {
-    mailingFactory;
-    mailingService;
-
-    constructor(){
-        if(!this.mailingFactory && !this.mailingService) {
-            this.mailingFactory = new MailingFactory();
-            this.mailingService = new MailingService(this.mailingFactory.getConfigurations());
-        }
+  constructor() {
+    if (!this.mailingFactory && !this.mailingService) {
+      this.mailingFactory = new MailingFactory();
+      this.mailingService = new MailingService(this.mailingFactory.getConfigurations());
     }
+  }
 
-    getMailingService() {
-        return this.mailingService;
-    }
-
+  getMailingService() {
+    return this.mailingService;
+  }
 }
 
 export default MailingBuilder;

@@ -1,56 +1,30 @@
-import Joi from '@hapi/joi';
+import CU_crearCancha from '../CasosDeUso/CU_crearCancha.js';
+import CU_obtenerTodasLasCanchas from '../CasosDeUso/CU_obtenerTodasLasCanchas.js';
+import CU_obtenerCanchaPorId from '../CasosDeUso/CU_obtenerCanchaPorId.js';
+import CU_eliminarCancha from '../CasosDeUso/CU_eliminarCancha.js';
 
 class ModuloCanchas {
   constructor(canchaRepository) {
-    this.canchaRepository = canchaRepository;
+    this.CU_crearCancha = new CU_crearCancha(canchaRepository);
+    this.CU_obtenerTodasLasCanchas = new CU_obtenerTodasLasCanchas(canchaRepository);
+    this.CU_obtenerCanchaPorId = new CU_obtenerCanchaPorId(canchaRepository);
+    this.CU_eliminarCancha = new CU_eliminarCancha(canchaRepository);
   }
 
-  async crear(cancha) {
-    await this.validar(cancha);
-    cancha.estaHabilitada = true;
-    this.canchaRepository.guardar(cancha);
-    return cancha;
-  }
-
-  async validar(cancha) {
-    const schema = Joi.object({
-      nombre: Joi.string()
-        .required(),
-      precio: Joi.number()
-        .required()
-        .min(50),
-      capacidad: Joi.number()
-        .required()
-        .min(1)
-        .max(20),
-    });
-    try {
-      await schema.validateAsync(cancha);
-    } catch (error) {
-      throw {
-        status: 400,
-        error,
-      };
-    }
+  crear(cancha) {
+    return this.CU_crearCancha.run(cancha);
   }
 
   obtenerTodas() {
-    return this.canchaRepository.obtenerTodas();
+    return this.CU_obtenerTodasLasCanchas.run();
   }
 
   obtenerPorId(canchaId) {
-    const canchaEncontrada = this.canchaRepository.obtenerPorId(canchaId);
-    if (canchaEncontrada) {
-      return canchaEncontrada;
-    }
-    throw {
-      error: 'Id de cancha no encontrado',
-      status: 404,
-    };
+    return this.CU_obtenerCanchaPorId.run(canchaId);
   }
 
   eliminarCancha(canchaId) {
-    this.canchaRepository.eliminarCancha(canchaId);
+    return this.CU_eliminarCancha.run(canchaId);
   }
 }
 export default ModuloCanchas;
