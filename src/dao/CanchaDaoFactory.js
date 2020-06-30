@@ -1,4 +1,4 @@
-import CanchaDaoArray from './CanchaDaoArray.js';
+// import CanchaDaoArray from './CanchaDaoArray.js';
 import CanchaDaoDb from './CanchaDaoDb.js';
 
 class CanchaDaoFactory {

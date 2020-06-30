@@ -24,7 +24,7 @@ canchasRoute.get('/', async (req, res) => {
 
 canchasRoute.get('/:id', async (req, res, next) => {
   try {
-    const cancha = await moduloCanchas.obtenerPorId(req.params.id);
+    const cancha = await moduloCanchas.obtenerPorId(Number(req.params.id));
     res.json(cancha).send();
   } catch (error) {
     next(error);
@@ -33,7 +33,7 @@ canchasRoute.get('/:id', async (req, res, next) => {
 
 canchasRoute.delete('/:id', async (req, res, next) => {
   try {
-    await moduloCanchas.eliminarCancha(req.params.id);
+    await moduloCanchas.eliminarCancha(Number(req.params.id));
     res.status(204).send();
   } catch (error) {
     next(error);

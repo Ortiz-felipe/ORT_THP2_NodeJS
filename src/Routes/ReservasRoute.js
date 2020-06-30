@@ -40,7 +40,7 @@ reservasRoute.post('/:id/confirmacion', async (req, res, next) => {
 
 reservasRoute.get('/:id', async (req, res, next) => {
   try {
-    const reserva = await moduloReserva.obtenerPorId(req.params.id);
+    const reserva = await moduloReserva.obtenerPorId(Number(req.params.id));
     res.json(reserva).send();
   } catch (error) {
     next(error);
