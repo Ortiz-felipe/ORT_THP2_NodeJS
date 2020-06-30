@@ -1,3 +1,6 @@
+import Attachment from '../models/Attachment';
+import Email from '../models/Email';
+
 export default class GeneradorReporte {
   constructor(reporteDirectorExcel, excelBuilder, repoCanchas, repoReservas, emailService, cotizador) {
     this.reporteDirectorExcel = reporteDirectorExcel;
@@ -89,9 +92,14 @@ export default class GeneradorReporte {
       contenidoPesos: this.gananciaPesos,
       contenidoDolares: this.gananciaDolares,
     });
+
+    const attachment = new Attachment('reporte.xlsx', './reporte.xlsx', 'text');
+    const email = new Email('ioelchejas2020@gmail.com', 'reporte', 'le adjunto el reporte');
+    email.attachments.push(attachment);
+
     try {
-      await this.emailService.sendMail('test@test.com', 'ioelchejas2020@gmail.com', 'reporte', 'le adjunto el reporte', 'reporte.xlsx');
-      await this.emailService.sendMail('test@test.com', 'ioelchejas@gmail.com', 'reporte del mes', 'le adjunto el reporte', 'reporte.xlsx');
+      await this.emailService.sendMail(email);
+      await this.emailService.sendMail(email);
     } catch (e) {
       console.log(e);
     }
