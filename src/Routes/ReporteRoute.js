@@ -1,5 +1,5 @@
 import express from 'express';
-import { getReportesApi } from '../apis/reportesAPI.js';
+import getReportesApi from '../apis/reportesAPI.js';
 
 function getReportesRouter() {
   const router = express.Router();

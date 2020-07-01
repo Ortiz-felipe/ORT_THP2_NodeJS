@@ -11,6 +11,7 @@ const reservasRepository = ReservasRepositoryFactory.create();
 
 function getReportesApi() {
   async function generarReporteMensual() {
+    let status;
     try {
       const director = new ReporteDeCanchasDirector();
       const excelBuilder = new ReporteEnExcelBuilder();
@@ -21,10 +22,12 @@ function getReportesApi() {
         director, excelBuilder, canchasRepository, reservasRepository, emailService, cotizador,
       );
       await generadorExcel.ejecutar();
-      return { status: 'ok' };
+      status = { status: 'ok' };
     } catch (e) {
       console.log(e);
+      status = { status: 'error' };
     }
+    return status;
   }
 
   return {
@@ -32,6 +35,4 @@ function getReportesApi() {
   };
 }
 
-export {
-  getReportesApi,
-};
+export default getReportesApi;

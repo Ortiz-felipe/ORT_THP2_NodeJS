@@ -10,5 +10,6 @@ app.use('/reservas', reservasRoute);
 app.use('/canchas', canchasRoute);
 app.use('/Generarreportes', getReportesRouter());
 app.use(errorMiddleware);
+app.use('/doc', express.static('apidoc'));
 
 export default app;

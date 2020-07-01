@@ -1,7 +1,11 @@
+import Chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
 import ModuloReservasFactory from '../src/ModuloReservas/ModuloReservasFactory.js';
 import ModuloCanchasFactory from '../src/ModuloCanchas/ModuloCanchasFactory.js';
 import Reserva from '../src/models/Reserva.js';
 import Cancha from '../src/models/Cancha.js';
+
+Chai.use(chaiAsPromised);
 
 async function moduloReservasTest() {
   const moduloCanchas = ModuloCanchasFactory.create();
@@ -12,79 +16,45 @@ async function moduloReservasTest() {
 
   async function crear_conDiaFeriado_noCreaReserva() {
     const reserva = new Reserva('nancy', 'nancy@gmail.com', '2020-12-25', '95821465', canchaCreada.id);
-    try {
-      await moduloReservas.CU_crearReserva.run(reserva);
-    } catch (error) {
-      console.log(error);
-    }
+    await Chai.assert.isRejected(moduloReservas.CU_crearReserva.run(reserva));
   }
 
   async function crear_conDiaNoferiado_creaReserva() {
     const reserva = new Reserva('nancy', 'nancy@gmail.com', '2020-12-23', '95821465', canchaCreada.id);
-    try {
-      await moduloReservas.CU_crearReserva.run(reserva);
-    } catch (error) {
-      console.log(error);
-    }
-    console.log(reserva);
+    const reservaCreada = await moduloReservas.CU_crearReserva.run(reserva);
+    Chai.assert(!!reservaCreada, 'La reserva tiene que haberse creado.');
   }
 
   async function crear_conNombreInvalido_noCreaReserva() {
     const reserva = new Reserva(1456, 'nancy@gmail.com', '2020-12-23', '95821465', canchaCreada.id);
-
-    try {
-      await moduloReservas.CU_crearReserva.run(reserva);
-    } catch (error) {
-      console.log(error);
-    }
+    await Chai.assert.isRejected(moduloReservas.CU_crearReserva.run(reserva));
   }
 
   async function crear_conFechaAnterior_noCreaReserva() {
     const reserva = new Reserva('pepe', 'nancy@gmail.com', '2020-03-24', '95821465', canchaCreada.id);
-
-    try {
-      await moduloReservas.CU_crearReserva.run(reserva);
-    } catch (error) {
-      console.log(error);
-    }
+    await Chai.assert.isRejected(moduloReservas.CU_crearReserva.run(reserva));
   }
 
   async function confirmarReserva_reservaExistente() {
     const reserva = new Reserva('pepe', 'nancy@gmail.com', '2021-07-24', '95821465', canchaCreada.id);
-    try {
-      const reservaCreada = await moduloReservas.crear(reserva);
+    const reservaCreada = await moduloReservas.crear(reserva);
 
-      await moduloReservas.CU_confirmarReserva.run(reservaCreada.id);
-
-      console.log('reservaConfirmada');
-    } catch (error) {
-      console.log(error);
-    }
+    await Chai.assert.isFulfilled(moduloReservas.CU_confirmarReserva.run(reservaCreada.id));
   }
 
   async function confirmarReserva_reservaNoExistente() {
-    try {
-      await moduloReservas.CU_confirmarReserva.run(100);
-    } catch (error) {
-      console.log(`No se confirmo por ${JSON.stringify(error)}`);
-    }
+    await Chai.assert.isRejected(moduloReservas.CU_confirmarReserva.run(100));
   }
 
   async function eliminarReserva_reservaExistente() {
-    const reserva = new Reserva('pepe', 'nancy@gmail.com', '2020-12-23', '95821465', 0);
+    const reserva = new Reserva('pepe', 'nancy@gmail.com', '2020-12-23', '95821465', canchaCreada.id);
     const reservaCreada = await moduloReservas.crear(reserva);
 
-    await moduloReservas.CU_eliminarReserva.run(reservaCreada.id);
-
-    console.log('Reserva eliminada');
+    await Chai.assert.isFulfilled(moduloReservas.CU_eliminarReserva.run(reservaCreada.id));
   }
 
   async function eliminarReserva_reservaNoExistente() {
-    try {
-      await moduloReservas.CU_eliminarReserva.run(100);
-    } catch (error) {
-      console.log(`No se elimino por ${JSON.stringify(error)}`);
-    }
+    await Chai.assert.isFulfilled(moduloReservas.CU_eliminarReserva.run(100));
   }
 
   await crear_conDiaFeriado_noCreaReserva();
@@ -95,6 +65,7 @@ async function moduloReservasTest() {
   await confirmarReserva_reservaNoExistente();
   await eliminarReserva_reservaExistente();
   await eliminarReserva_reservaNoExistente();
+  console.log('--------- Los test de moduloReservasTest pasaron correctamente ---------');
 }
 
 export default moduloReservasTest;
