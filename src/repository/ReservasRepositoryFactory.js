@@ -3,8 +3,11 @@ import ReservaDaoFactory from '../dao/ReservaDaoFactory.js';
 
 class ReservasRepositoryFactory {
   static create() {
-    const reservasDao = ReservaDaoFactory.create();
-    return new ReservasRepository(reservasDao);
+    if (!ReservasRepositoryFactory.instance) {
+      const reservasDao = ReservaDaoFactory.create();
+      ReservasRepositoryFactory.instance = new ReservasRepository(reservasDao);
+    }
+    return ReservasRepositoryFactory.instance;
   }
 }
 

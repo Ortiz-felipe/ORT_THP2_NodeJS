@@ -3,8 +3,11 @@ import CanchaDaoFactory from '../dao/CanchaDaoFactory.js';
 
 class CanchaRepositoryFactory {
   static create() {
-    const canchaDao = CanchaDaoFactory.create();
-    return new CanchaRepository(canchaDao);
+    if (!CanchaRepositoryFactory.instance) {
+      const canchaDao = CanchaDaoFactory.create();
+      CanchaRepositoryFactory.instance = new CanchaRepository(canchaDao);
+    }
+    return CanchaRepositoryFactory.instance;
   }
 }
 

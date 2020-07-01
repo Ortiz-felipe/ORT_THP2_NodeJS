@@ -3,6 +3,7 @@ import reporteTest from './reporteTest.js';
 import feriadosTest from './feriadosTest.js';
 import moduloReservasTest from './moduloReservasTest.js';
 import moduloCanchasTest from './moduloCanchasTest.js';
+import db from '../src/db.js';
 
 async function alltest() {
   await reporteTest();
@@ -11,4 +12,6 @@ async function alltest() {
   await moduloCanchasTest();
 }
 
-alltest();
+db.sync()
+  .then(() => alltest())
+  .catch((error) => console.log(error));
