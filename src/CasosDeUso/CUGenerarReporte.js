@@ -1,3 +1,6 @@
+import Attachment from '../models/Attachment.js';
+import Email from '../models/Email.js';
+
 export default class GeneradorReporte {
   constructor(reporteDirectorExcel, excelBuilder, repoCanchas, repoReservas, emailService, cotizador) {
     this.reporteDirectorExcel = reporteDirectorExcel;
@@ -10,7 +13,6 @@ export default class GeneradorReporte {
 
   async _obtenerDatosColumnasCanchas() {
     const columnasCanchas = await this._generarColumnasCanchas();
-    // console.log(columnasCanchas)
     await this._llenarDatosColumnasCanchas(columnasCanchas);
     return columnasCanchas;
   }
@@ -30,24 +32,38 @@ export default class GeneradorReporte {
   }
 
   async _llenarDatosColumnasCanchas(columnasCanchas) {
+    const canchas = await this.repoCanchas.obtenerTodas();
+    const idPrimeraCancha = canchas[0].id;
     const reservasDelMes = await this.repoReservas.obtenerTodas();
     for (const r of reservasDelMes) {
-      if (r.fecha.getDay() + 1 == 1) {
-        columnasCanchas[r.nroCancha - 1][1]++;
-      } else if (r.fecha.getDay() + 1 == 2) {
-        columnasCanchas[r.nroCancha - 1][2]++;
-      } else if (r.fecha.getDay() + 1 == 3) {
-        columnasCanchas[r.nroCancha - 1][3]++;
-      } else if (r.fecha.getDay() + 1 == 4) {
-        columnasCanchas[r.nroCancha - 1][4]++;
-      } else if (r.fecha.getDay() + 1 == 5) {
-        columnasCanchas[r.nroCancha - 1][5]++;
-      } else if (r.fecha.getDay() + 1 == 6) {
-        columnasCanchas[r.nroCancha - 1][6]++;
-      } else if (r.fecha.getDay() + 1 == 7) {
-        columnasCanchas[r.nroCancha - 1][7]++;
+      if (this._esReservaDelMesActual(r.fecha)) {
+        if (r.fecha.getDay() + 1 == 1) {
+          columnasCanchas[r.canchaId - idPrimeraCancha][1]++;
+        } else if (r.fecha.getDay() + 1 == 2) {
+          columnasCanchas[r.canchaId - idPrimeraCancha][2]++;
+        } else if (r.fecha.getDay() + 1 == 3) {
+          columnasCanchas[r.canchaId - idPrimeraCancha][3]++;
+        } else if (r.fecha.getDay() + 1 == 4) {
+          columnasCanchas[r.canchaId - idPrimeraCancha][4]++;
+        } else if (r.fecha.getDay() + 1 == 5) {
+          columnasCanchas[r.canchaId - idPrimeraCancha][5]++;
+        } else if (r.fecha.getDay() + 1 == 6) {
+          columnasCanchas[r.canchaId - idPrimeraCancha][6]++;
+        } else if (r.fecha.getDay() + 1 == 7) {
+          columnasCanchas[r.canchaId - idPrimeraCancha][7]++;
+        }
       }
     }
+  }
+
+  _esReservaDelMesActual(fechaReserva) {
+    let esReservaDelMesActual = false;
+    const date = new Date();
+    const month = date.getMonth();
+    if (fechaReserva.getMonth() == month) {
+      esReservaDelMesActual = true;
+    }
+    return esReservaDelMesActual;
   }
 
   async _obtenerFilaGananciaPesos() {
@@ -59,7 +75,17 @@ export default class GeneradorReporte {
     let gananciaPesos = 0;
     const reservasDelMes = await this.repoReservas.obtenerTodas();
     for (const r of reservasDelMes) {
-      gananciaPesos += r.precioFinal;
+      let i = 0;
+      let encontrado = false;
+      const canchas = await this.repoCanchas.obtenerTodas();
+      while (i < canchas.length && !encontrado) {
+        if (r.canchaId == canchas[i].id) {
+          gananciaPesos += canchas[i].precio;
+          encontrado = true;
+        }
+        i++;
+      }
+      // gananciaPesos += r.precioFinal;
     }
     return gananciaPesos;
   }
@@ -77,7 +103,6 @@ export default class GeneradorReporte {
 
   async ejecutar() {
     this.canchas = await this._obtenerDatosColumnasCanchas();
-    console.log(this.canchas);
     this.gananciaPesos = await this._obtenerFilaGananciaPesos();
     this.gananciaDolares = await this._obtenerFilaGananciaDolares();
 
@@ -89,9 +114,13 @@ export default class GeneradorReporte {
       contenidoPesos: this.gananciaPesos,
       contenidoDolares: this.gananciaDolares,
     });
+
+    const attachment = new Attachment('reporte.xlsx', './reporte.xlsx', 'text');
+    const email = new Email('ioelchejas2020@gmail.com', 'reporte', 'le adjunto el reporte');
+    email.attachments.push(attachment.getAttachment());
+
     try {
-      await this.emailService.sendMail('test@test.com', 'ioelchejas2020@gmail.com', 'reporte', 'le adjunto el reporte', 'reporte.xlsx');
-      await this.emailService.sendMail('test@test.com', 'ioelchejas@gmail.com', 'reporte del mes', 'le adjunto el reporte', 'reporte.xlsx');
+      await this.emailService.sendMail(email);
     } catch (e) {
       console.log(e);
     }

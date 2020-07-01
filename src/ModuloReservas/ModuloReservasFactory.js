@@ -5,11 +5,14 @@ import ReservasRepositoryFactory from '../repository/ReservasRepositoryFactory.j
 
 class ModuloReservasFactory {
   static async create() {
-    const apiFeriados = await FeriadosFactory.create();
-    const repository = ReservasRepositoryFactory.create();
-    const moduloCanchas = ModuloCanchasFactory.create();
+    if (!ModuloReservasFactory.instance) {
+      const apiFeriados = await FeriadosFactory.create();
+      const repository = ReservasRepositoryFactory.create();
+      const moduloCanchas = ModuloCanchasFactory.create();
+      ModuloReservasFactory.instance = new ModuloReservas(apiFeriados, moduloCanchas, repository);
+    }
 
-    return new ModuloReservas(apiFeriados, moduloCanchas, repository);
+    return ModuloReservasFactory.instance;
   }
 }
 
