@@ -1,5 +1,5 @@
 import Attachment from '../models/Attachment.js';
-import Email from '../models/email.js';
+import Email from '../models/Email.js';
 
 export default class GeneradorReporte {
   constructor(reporteDirectorExcel, excelBuilder, repoCanchas, repoReservas, emailService, cotizador) {
@@ -116,7 +116,7 @@ export default class GeneradorReporte {
     });
 
     const attachment = new Attachment('reporte.xlsx', './reporte.xlsx', 'text');
-    const email = new Email('nancy.helenam@gmail.com', 'reporte', 'le adjunto el reporte');
+    const email = new Email('ioelchejas2020@gmail.com', 'reporte', 'le adjunto el reporte');
     email.attachments.push(attachment.getAttachment());
 
     try {

@@ -5,18 +5,18 @@ class Attachment {
     this.buildAttachment(fileName, path, contentType);
   }
 
-  buildAttachment(fileName, path, contentType) {
+  buildAttachment(fileName, path, type) {
     const fileRead = fs.readFileSync(path);
     const fileBase64 = fileRead.toString('base64');
     this.fileAttachment = {
       filename: fileName,
       content: fileBase64,
-      contentType,
+      contentType: type,
     };
   }
 
   getAttachment() {
-    return this.fileAttachment;
+    return { ...this.fileAttachment };
   }
 }
 
