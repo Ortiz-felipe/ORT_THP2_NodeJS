@@ -129,7 +129,7 @@ canchasRoute.post('/', async (req, res, next) => {
 });
 
 /**
- * @api {delete} canchas/:id Elimina una cancha una cancha
+ * @api {delete} canchas/:id Elimina una cancha
  * @apiVersion 0.1.0
  * @apiName Eliminar
  * @apiGroup Canchas
