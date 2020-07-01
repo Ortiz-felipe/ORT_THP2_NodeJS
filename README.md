@@ -22,3 +22,11 @@ SENDGRID_API_KEY=# API key de Sendgrid
 MAIL_SENDER=# Dirección de email remitente de los mails
 ```
 
+### Generar documentación 
+
+Para generar la documentación ejecutar el siguiente comando:
+
+```sh
+npm run generate-doc
+```
+Después ejecutar `npm start` ` acceder a http://localhost:3000/doc/

@@ -7,6 +7,7 @@
   "scripts": {
     "test": "node test/index.js",
     "start": "nodemon src/server.js",
+    "generate-doc": "apidoc -i src/ -o apidoc/",
     "lint": "eslint ."
   },
   "repository": {
@@ -33,6 +34,7 @@
     "sequelize": "^6.2.3"
   },
   "devDependencies": {
+    "apidoc": "^0.23.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "eslint": "^7.2.0",
