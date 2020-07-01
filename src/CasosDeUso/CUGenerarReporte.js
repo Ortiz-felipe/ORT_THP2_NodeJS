@@ -1,5 +1,5 @@
 import Attachment from '../models/Attachment.js';
-import Email from '../models/Email.js';
+import Email from '../models/email.js';
 
 export default class GeneradorReporte {
   constructor(reporteDirectorExcel, excelBuilder, repoCanchas, repoReservas, emailService, cotizador) {
