@@ -36,7 +36,7 @@ export default class GeneradorReporte {
     const idPrimeraCancha = canchas[0].id;
     const reservasDelMes = await this.repoReservas.obtenerTodas();
     for (const r of reservasDelMes) {
-      if (this._esReservaDelMesActual(r.fecha)) {
+      if (this._esReservaDelMesActual(r.fecha) && r.estadoReserva) {
         if (r.fecha.getDay() + 1 == 1) {
           columnasCanchas[r.canchaId - idPrimeraCancha][1]++;
         } else if (r.fecha.getDay() + 1 == 2) {
@@ -60,7 +60,8 @@ export default class GeneradorReporte {
     let esReservaDelMesActual = false;
     const date = new Date();
     const month = date.getMonth();
-    if (fechaReserva.getMonth() == month) {
+    const year = date.getFullYear();
+    if (fechaReserva.getMonth() == month && fechaReserva.getFullYear() == year) {
       esReservaDelMesActual = true;
     }
     return esReservaDelMesActual;
@@ -75,24 +76,28 @@ export default class GeneradorReporte {
     let gananciaPesos = 0;
     const reservasDelMes = await this.repoReservas.obtenerTodas();
     for (const r of reservasDelMes) {
-      let i = 0;
-      let encontrado = false;
-      const canchas = await this.repoCanchas.obtenerTodas();
-      while (i < canchas.length && !encontrado) {
-        if (r.canchaId == canchas[i].id) {
-          gananciaPesos += canchas[i].precio;
-          encontrado = true;
+      if (this._esReservaDelMesActual(r.fecha) && r.estadoReserva) {
+        let i = 0;
+        let encontrado = false;
+        const canchas = await this.repoCanchas.obtenerTodas();
+        while (i < canchas.length && !encontrado) {
+          if (r.canchaId == canchas[i].id) {
+            gananciaPesos += canchas[i].precio;
+            encontrado = true;
+          }
+          i++;
         }
-        i++;
       }
-      // gananciaPesos += r.precioFinal;
     }
     return gananciaPesos;
   }
 
   async _obtenerFilaGananciaDolares() {
     const pesos = await this._obtenerGananciaPesos();
-    const dolares = await this._obtenerGananciaDolares(pesos);
+    let dolares = 0;
+    if (pesos > 0) {
+      dolares = await this._obtenerGananciaDolares(pesos);
+    }
     return ['Ganancia en dolares del mes: ', dolares];
   }
 
