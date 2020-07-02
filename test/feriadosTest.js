@@ -19,7 +19,7 @@ async function feriadosTest() {
   }
 
   function esFeriado_conFechaInvalida_lanzaError() {
-    Chai.assert.throws(() => feriadosApi.esFeriado('holis'));
+    Chai.assert.throws(() => feriadosApi.esFeriado('2020-02-30'));
   }
 
   esFeriado_conDiaFeriado_devuelveTrue();
