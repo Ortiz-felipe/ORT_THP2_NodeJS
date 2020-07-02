@@ -1,8 +1,8 @@
 import express from 'express';
-import ModuloCanchasFactory from '../ModuloCanchas/ModuloCanchasFactory.js';
+import CanchasFactory from '../apis/Canchas/CanchasFactory.js';
 import Cancha from '../models/Cancha.js';
 
-const moduloCanchas = ModuloCanchasFactory.create();
+const canchasApi = CanchasFactory.create();
 const canchasRoute = express.Router();
 
 const transformarBodyACancha = (body) => new Cancha(body.nombre, body.precio, body.capacidad);
@@ -36,7 +36,7 @@ const transformarBodyACancha = (body) => new Cancha(body.nombre, body.precio, bo
  *
  */
 canchasRoute.get('/', async (req, res) => {
-  const canchas = await moduloCanchas.obtenerTodas();
+  const canchas = await canchasApi.obtenerTodas();
   res.json(canchas).send();
 });
 
@@ -76,7 +76,7 @@ canchasRoute.get('/', async (req, res) => {
  */
 canchasRoute.get('/:id', async (req, res, next) => {
   try {
-    const cancha = await moduloCanchas.obtenerPorId(Number(req.params.id));
+    const cancha = await canchasApi.obtenerPorId(Number(req.params.id));
     res.json(cancha).send();
   } catch (error) {
     next(error);
@@ -121,7 +121,7 @@ canchasRoute.get('/:id', async (req, res, next) => {
 canchasRoute.post('/', async (req, res, next) => {
   const { body } = req;
   try {
-    const canchaCreada = await moduloCanchas.crear(transformarBodyACancha(body));
+    const canchaCreada = await canchasApi.crear(transformarBodyACancha(body));
     res.status(201).json(canchaCreada).send();
   } catch (error) {
     next(error);
@@ -148,7 +148,7 @@ canchasRoute.post('/', async (req, res, next) => {
  */
 canchasRoute.delete('/:id', async (req, res, next) => {
   try {
-    await moduloCanchas.eliminarCancha(Number(req.params.id));
+    await canchasApi.eliminarCancha(Number(req.params.id));
     res.status(204).send();
   } catch (error) {
     next(error);

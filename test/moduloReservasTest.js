@@ -1,18 +1,18 @@
 import Chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import ModuloReservasFactory from '../src/ModuloReservas/ModuloReservasFactory.js';
-import ModuloCanchasFactory from '../src/ModuloCanchas/ModuloCanchasFactory.js';
+import CanchasFactory from '../src/apis/Canchas/CanchasFactory.js';
 import Reserva from '../src/models/Reserva.js';
 import Cancha from '../src/models/Cancha.js';
 
 Chai.use(chaiAsPromised);
 
 async function moduloReservasTest() {
-  const moduloCanchas = ModuloCanchasFactory.create();
+  const canchas = CanchasFactory.create();
   const moduloReservas = await ModuloReservasFactory.create();
 
   const cancha = new Cancha('Pele', 55, 11);
-  const canchaCreada = await moduloCanchas.crear(cancha);
+  const canchaCreada = await canchas.crear(cancha);
 
   async function crear_conDiaFeriado_noCreaReserva() {
     const reserva = new Reserva('nancy', 'nancy@gmail.com', '2020-12-25', '95821465', canchaCreada.id);

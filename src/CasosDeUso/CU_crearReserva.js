@@ -2,9 +2,9 @@ import moment from 'moment';
 import Joi from '@hapi/joi';
 
 class CU_crearReserva {
-  constructor(apiFeriados, moduloCanchas, reservasRepository) {
+  constructor(apiFeriados, canchas, reservasRepository) {
     this.apiFeriados = apiFeriados;
-    this.moduloCanchas = moduloCanchas;
+    this.canchas = canchas;
     this.reservasRepository = reservasRepository;
   }
 
@@ -57,7 +57,7 @@ class CU_crearReserva {
 
   async run(reserva) {
     await this.validar(reserva);
-    await this.moduloCanchas.obtenerPorId(reserva.canchaId);
+    await this.canchas.obtenerPorId(reserva.canchaId);
     return this.reservasRepository.guardar(reserva);
   }
 }

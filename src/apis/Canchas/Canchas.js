@@ -1,9 +1,9 @@
-import CU_crearCancha from '../CasosDeUso/CU_crearCancha.js';
-import CU_obtenerTodasLasCanchas from '../CasosDeUso/CU_obtenerTodasLasCanchas.js';
-import CU_obtenerCanchaPorId from '../CasosDeUso/CU_obtenerCanchaPorId.js';
-import CU_eliminarCancha from '../CasosDeUso/CU_eliminarCancha.js';
+import CU_crearCancha from '../../CasosDeUso/CU_crearCancha.js';
+import CU_obtenerTodasLasCanchas from '../../CasosDeUso/CU_obtenerTodasLasCanchas.js';
+import CU_obtenerCanchaPorId from '../../CasosDeUso/CU_obtenerCanchaPorId.js';
+import CU_eliminarCancha from '../../CasosDeUso/CU_eliminarCancha.js';
 
-class ModuloCanchas {
+class Canchas {
   constructor(canchaRepository) {
     this.CU_crearCancha = new CU_crearCancha(canchaRepository);
     this.CU_obtenerTodasLasCanchas = new CU_obtenerTodasLasCanchas(canchaRepository);
@@ -27,4 +27,4 @@ class ModuloCanchas {
     return this.CU_eliminarCancha.run(canchaId);
   }
 }
-export default ModuloCanchas;
+export default Canchas;
