@@ -1,11 +1,11 @@
 import express from 'express';
-import ModuloReservasFactory from '../ModuloReservas/ModuloReservasFactory.js';
+import ReservasFactory from '../apis/reservas/ReservasFactory.js';
 import Reserva from '../models/Reserva.js';
 
-let moduloReserva;
+let reservaApi;
 
-ModuloReservasFactory.create().then((moduloReservaCreado) => {
-  moduloReserva = moduloReservaCreado;
+ReservasFactory.create().then((reservaCreada) => {
+  reservaApi = reservaCreada;
 });
 
 const transformarBodyAReserva = (body) => new Reserva(
@@ -46,7 +46,7 @@ const reservasRoute = express.Router();
  *
  */
 reservasRoute.get('/', async (req, res) => {
-  const reservas = await moduloReserva.obtenerTodas();
+  const reservas = await reservaApi.obtenerTodas();
   res.json(reservas).send();
 });
 
@@ -89,7 +89,7 @@ reservasRoute.get('/', async (req, res) => {
  */
 reservasRoute.get('/:id', async (req, res, next) => {
   try {
-    const reserva = await moduloReserva.obtenerPorId(Number(req.params.id));
+    const reserva = await reservaApi.obtenerPorId(Number(req.params.id));
     res.json(reserva).send();
   } catch (error) {
     next(error);
@@ -138,7 +138,7 @@ reservasRoute.get('/:id', async (req, res, next) => {
 reservasRoute.post('/', async (req, res, next) => {
   const { body } = req;
   try {
-    const reservaCreada = await moduloReserva.crear(transformarBodyAReserva(body));
+    const reservaCreada = await reservaApi.crear(transformarBodyAReserva(body));
     res.status(201).json(reservaCreada).send();
   } catch (error) {
     next(error);
@@ -167,7 +167,7 @@ reservasRoute.post('/', async (req, res, next) => {
  */
 reservasRoute.post('/:id/confirmacion', async (req, res, next) => {
   try {
-    const reserva = await moduloReserva.confirmar(Number(req.params.id));
+    const reserva = await reservaApi.confirmar(Number(req.params.id));
     res.json(reserva).send();
   } catch (error) {
     next(error);
@@ -195,8 +195,8 @@ reservasRoute.post('/:id/confirmacion', async (req, res, next) => {
 reservasRoute.delete('/:id', async (req, res, next) => {
   try {
     const id = Number(req.params.id);
-    await moduloReserva.obtenerPorId(id);
-    await moduloReserva.eliminarReserva(id);
+    await reservaApi.obtenerPorId(id);
+    await reservaApi.eliminarReserva(id);
     res.status(204).send();
   } catch (error) {
     next(error);
