@@ -14,8 +14,8 @@ class EmailService {
     try {
       await SendGrid.default.send(email);
     } catch (error) {
-      const { message } = error.response.body[0];
-      throw new Error(message);
+      const { message } = error.response.body.errors[0];
+      throw new Error({ name: error.code, message });
     }
   }
 }
