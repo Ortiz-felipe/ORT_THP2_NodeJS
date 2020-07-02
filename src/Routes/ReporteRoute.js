@@ -6,7 +6,7 @@ function getReportesRouter() {
 
   const reportesAPI = getReportesApi();
   /**
- * @api {get} generarReporte Generara un reporte con las ganancias del mes
+ * @api {get} Generarreportes/mensual Generara un reporte con las ganancias del mes
  *
  * @apiVersion 0.1.0
  * @apiName Mensual
