@@ -2,6 +2,7 @@ import Reservas from './Reservas.js';
 import FeriadosFactory from '../feriados/FeriadosFactory.js';
 import CanchasFactory from '../Canchas/CanchasFactory.js';
 import ReservasRepositoryFactory from '../../repository/ReservasRepositoryFactory.js';
+import EmailFactory from '../../EmailModule/MailingFactory';
 
 class ReservasFactory {
   static async create() {
@@ -9,7 +10,9 @@ class ReservasFactory {
       const apiFeriados = await FeriadosFactory.create();
       const repository = ReservasRepositoryFactory.create();
       const canchas = CanchasFactory.create();
-      ReservasFactory.instance = new Reservas(apiFeriados, canchas, repository);
+      const emailFactory = new EmailFactory();
+      const emailService = emailFactory.getMailingService();
+      ReservasFactory.instance = new Reservas(apiFeriados, canchas, repository, emailService);
     }
 
     return ReservasFactory.instance;
