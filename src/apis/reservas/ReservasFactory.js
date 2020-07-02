@@ -2,7 +2,7 @@ import Reservas from './Reservas.js';
 import FeriadosFactory from '../feriados/FeriadosFactory.js';
 import CanchasFactory from '../Canchas/CanchasFactory.js';
 import ReservasRepositoryFactory from '../../repository/ReservasRepositoryFactory.js';
-import EmailFactory from '../../EmailModule/MailingFactory';
+import EmailFactory from '../../EmailModule/MailingFactory.js';
 
 class ReservasFactory {
   static async create() {

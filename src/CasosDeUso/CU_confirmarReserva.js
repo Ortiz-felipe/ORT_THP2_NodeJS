@@ -13,8 +13,8 @@ class CU_confirmarReserva {
         reservaEncontrada.estadoReserva = true;
         await this.reservasRepository.actualizar(id, reservaEncontrada);
         const cuerpoMensaje = `Hola ${reservaEncontrada.nombre}. Se ha confirmado tu reserva para el dia ${reservaEncontrada.fecha}`;
-        const email = new Email(reservaEncontrada.Email, 'Confirmacion de Reserva', cuerpoMensaje);
-        this.mailService.send(email);
+        const email = new Email(reservaEncontrada.email, 'Confirmacion de Reserva', cuerpoMensaje);
+        this.mailService.sendMail(email);
       } else {
         throw Error({ name: 'repositoryError', message: 'Id no encontrado' });
       }

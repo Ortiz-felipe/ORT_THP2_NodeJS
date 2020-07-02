@@ -1,4 +1,5 @@
 import MailingService from './MailingService.js';
+import EmailServiceMock from '../../test/mock/EmailServiceMock.js';
 
 class MailingFactory {
   constructor() {
@@ -7,6 +8,9 @@ class MailingFactory {
   }
 
   getMailingService() {
+    if (process.env.NODE_ENV === 'test') {
+      return new EmailServiceMock();
+    }
     return this.mailingService;
   }
 }
