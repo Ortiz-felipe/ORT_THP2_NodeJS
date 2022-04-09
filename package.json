@@ -28,7 +28,7 @@
     "email-validator": "^2.0.4",
     "exceljs": "^4.1.0",
     "express": "^4.17.1",
-    "moment": "^2.26.0",
+    "moment": "^2.29.2",
     "mssql": "^6.2.0",
     "mysql2": "^2.1.0",
     "sequelize": "^6.2.3"
